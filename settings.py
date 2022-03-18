@@ -20,3 +20,4 @@ class Settings:
         self.speedup = 1.1
         self.lives = 3
         self.score = 0
+        self.bar_speed = 1.5

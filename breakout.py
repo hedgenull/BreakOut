@@ -8,15 +8,18 @@
 # AUTHOR:       Greyson Smith (mathopotamus@bearcreek.family)
 #================================================================================>
 
-
 import pygame
 from settings import Settings
+
 
 class BreakOut:
     """Base class for BreakOut game."""
     def __init__(self):
         """Initialize BreakOut assets and objects."""
-        # Initialize screen.
-        self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
-        pygame.display.set_caption("BreakOut")
+        # Initialize settings.
         self.settings = Settings()
+
+        # Initialize screen.
+        self.screen = pygame.display.set_mode(
+            (self.settings.screen_width, self.settings.screen_height))
+        pygame.display.set_caption("BreakOut")

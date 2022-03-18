@@ -20,8 +20,9 @@ class Bar(Sprite):
         self.screen = game.screen
         self.screen_rect = self.screen.get_rect()
         self.settings = game.settings
-        self.rect = pygame.Rect(width=self.game.screen_width // 7,
-                                height=self.game.screen_height // 50)
+        width = self.settings.screen_width / 7
+        height = self.settings.screen_height / 50
+        self.rect = pygame.Rect(0, 0, width, height)
         self.rect.midbottom = self.screen_rect.midbottom
 
         # Movement flags

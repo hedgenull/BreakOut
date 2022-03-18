@@ -10,6 +10,7 @@
 
 import pygame
 from settings import Settings
+from bar import Bar
 
 
 class BreakOut:
@@ -23,3 +24,16 @@ class BreakOut:
         self.screen = pygame.display.set_mode(
             (self.settings.screen_width, self.settings.screen_height))
         pygame.display.set_caption("BreakOut")
+
+        # Initialize bar.
+        self.bar = Bar(self)
+
+    def run(self):
+        while True:
+            self.screen.fill(self.settings.bg_color)
+            pygame.display.flip()
+
+
+if __name__ == "__main__":
+    breakout = BreakOut()
+    breakout.run()

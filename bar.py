@@ -20,6 +20,8 @@ class Bar(Sprite):
         self.screen: pygame.Surface = game.screen
         self.screen_rect = self.screen.get_rect()
         self.settings = game.settings
+
+        # Center the bar
         width = self.settings.screen_width / 7
         height = self.settings.screen_height / 30
         self.rect = pygame.Rect(0, 0, width, height)
@@ -29,25 +31,16 @@ class Bar(Sprite):
         self.moving_left = False
         self.moving_right = False
         self.speed = self.settings.bar_speed
+        self.x = float(self.rect.x)
 
     def update(self):
         """Update the bar based on the movement flags."""
-        if self.moving_left and self.rect.left > 0:
-            self.rect.x -= self.speed
+        if self.moving_left and self.rect.left > self.screen_rect.left:
+            self.x -= self.speed
         if self.moving_right and self.rect.right < self.screen_rect.right:
-            self.rect.x += self.speed
+            self.x += self.speed
+        self.rect.x = self.x
 
     def blitme(self):
         """Draw the bar at its current position."""
         pygame.draw.rect(self.screen, self.settings.bar_color, self.rect)
-
-    def center(self):
-        """Center the bar on the screen."""
-        self.rect.midbottom = self.screen_rect.midbottom
-    
-    def update(self):
-        """Update the bar's position based on the movement flag."""
-        if self.moving_right and self.rect.right < self.screen_rect.right:
-            self.rect.x += self.speed
-        if self.moving_left and self.rect.left > 0:
-            self.rect.x -= self.speed

@@ -39,11 +39,12 @@ class BreakOut:
             self._update_screen()
 
     def _update_screen(self):
+        """Update the screen, assets, and fill the background."""
         self.screen.fill(self.settings.bg_color)
         self.bar.blitme()
         self.ball.blitme()
         pygame.display.flip()
-    
+
     def _check_events(self):
         """Respond to keypresses and mouse events."""
         for event in pygame.event.get():
@@ -53,7 +54,7 @@ class BreakOut:
                 self._check_keydown_events(event)
             elif event.type == pygame.KEYUP:
                 self._check_keyup_events(event)
-    
+
     def _check_keydown_events(self, event):
         if event.key == pygame.K_RIGHT:
             self.bar.moving_right = True
@@ -61,7 +62,6 @@ class BreakOut:
             self.bar.moving_left = True
         elif event.key == pygame.K_q or event.key == pygame.K_ESCAPE:
             sys.exit()
-    
 
     def _check_keyup_events(self, event):
         if event.key == pygame.K_RIGHT:

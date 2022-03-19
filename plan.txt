@@ -1,6 +1,6 @@
 Breakout plan:
 
-1. Create bar and make it move with arrow keys.
+[1. Create bar and make it move with arrow keys.]
 2. Create ball and make it bounce off of objects.
 3. Create bricks.
 4. Make bricks disappear when hit with the ball.

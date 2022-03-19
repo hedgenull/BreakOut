@@ -17,7 +17,7 @@ class Bar(Sprite):
     def __init__(self, game):
         """Initialize the bar and set its properties."""
         self.game = game
-        self.screen = game.screen
+        self.screen: pygame.Surface = game.screen
         self.screen_rect = self.screen.get_rect()
         self.settings = game.settings
         width = self.settings.screen_width / 7
@@ -39,7 +39,7 @@ class Bar(Sprite):
 
     def blitme(self):
         """Draw the bar at its current position."""
-        self.screen.blit(self.image, self.rect)
+        pygame.draw.rect(self.screen, self.settings.bar_color, self.rect)
 
     def center(self):
         """Center the bar on the screen."""

@@ -21,3 +21,4 @@ class Settings:
         self.lives = 3
         self.score = 0
         self.bar_speed = 1.5
+        self.bar_color = (255, 0, 0)

@@ -31,7 +31,10 @@ class BreakOut:
     def run(self):
         while True:
             self.screen.fill(self.settings.bg_color)
+            self.bar.blitme()
             pygame.display.flip()
+    
+    
 
 
 if __name__ == "__main__":

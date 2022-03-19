@@ -11,6 +11,7 @@
 import pygame, sys
 from settings import Settings
 from bar import Bar
+from ball import Ball
 
 
 class BreakOut:
@@ -28,13 +29,20 @@ class BreakOut:
         # Initialize bar.
         self.bar = Bar(self)
 
+        # Initialize ball.
+        self.ball = Ball(self)
+
     def run(self):
         while True:
             self._check_events()
             self.bar.update()
-            self.screen.fill(self.settings.bg_color)
-            self.bar.blitme()
-            pygame.display.flip()
+            self._update_screen()
+
+    def _update_screen(self):
+        self.screen.fill(self.settings.bg_color)
+        self.bar.blitme()
+        self.ball.blitme()
+        pygame.display.flip()
     
     def _check_events(self):
         """Respond to keypresses and mouse events."""

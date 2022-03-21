@@ -43,6 +43,7 @@ class BreakOut:
         self.screen.fill(self.settings.bg_color)
         self.bar.blitme()
         self.ball.blitme()
+        self.ball.speed *= self.settings.ball_speedup
         pygame.display.flip()
 
     def _check_events(self):

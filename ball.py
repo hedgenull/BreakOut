@@ -11,6 +11,7 @@
 import pygame
 from pygame.sprite import Sprite
 
+
 class Ball(Sprite):
     """Ball class for the BreakOut game."""
     def __init__(self, game):
@@ -22,11 +23,11 @@ class Ball(Sprite):
         self.speed = self.settings.ball_speed
         self.image = pygame.image.load("assets/ball.png")
         self.rect = self.image.get_rect()
-        
+
         # Center the ball on the bar.
         self.rect.centerx = self.screen_rect.centerx
         self.rect.bottom = self.game.bar.rect.top - 10
-    
+
     def blitme(self):
         """Draw the ball's image at its rect."""
         self.screen.blit(self.image, self.rect)

@@ -25,6 +25,10 @@ class Ball(Sprite):
         self.image = pygame.image.load("assets/ball.png")
         self.rect = self.image.get_rect()
 
+        self.initialize_position_settings()
+
+    def initialize_position_settings(self):
+        """Initialize the ball's speed, position and direction."""
         # Center the ball on the bar.
         self.rect.centerx = self.screen_rect.centerx
         self.rect.bottom = self.game.bar.rect.top - 10
@@ -39,7 +43,7 @@ class Ball(Sprite):
         self.screen.blit(self.image, self.rect)
 
     def update(self):
-        # Move the ball along its current direction at its current speed
+        """Move the ball and bounce it off of the walls."""
         dx, dy = self.direction
         self.rect.move_ip(self.speed * dx, self.speed * dy)
 
@@ -48,7 +52,11 @@ class Ball(Sprite):
             self.direction = -dx, dy
             self.speed *= self.settings.speedup
 
-        # Bounce the ball off the top or bottom walls
-        if self.rect.top <= 0 or self.rect.bottom >= self.screen_rect.bottom:
+        # Bounce the ball off the top wall or the bar
+        if self.rect.top <= 0 or self.rect.colliderect(self.game.bar.rect):
             self.direction = dx, -dy
             self.speed *= self.settings.speedup
+
+        # Respond to the ball going off the screen
+        if self.rect.bottom > self.screen_rect.bottom:
+            self.game._ball_lost()

@@ -8,7 +8,8 @@
 # AUTHOR:       Greyson Smith (mathopotamus@bearcreek.family)
 #================================================================================>
 
-import pygame, sys
+import pygame, sys, time
+
 from settings import Settings
 from bar import Bar
 from ball import Ball
@@ -31,6 +32,7 @@ class BreakOut:
 
         # Initialize ball.
         self.ball = Ball(self)
+        self.lives = self.settings.lives
 
     def run(self):
         while True:
@@ -70,6 +72,21 @@ class BreakOut:
             self.bar.moving_right = False
         elif event.key == pygame.K_LEFT:
             self.bar.moving_left = False
+    
+    def _ball_lost(self):
+        """Respond to when the ball goes off of the screen."""
+        time.sleep(3)
+        if self.lives > 0:
+            # Decrement lives left
+            self.lives -= 1
+
+            # Reset ball's position, but keep the speed
+            current_ball_speed = self.ball.speed
+            self.ball.initialize_position_settings()
+            self.ball.speed = current_ball_speed
+        else:
+            sys.exit()
+
 
 
 if __name__ == "__main__":

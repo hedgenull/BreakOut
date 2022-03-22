@@ -17,7 +17,7 @@ class Settings:
         self.screen_width = 1200
         self.screen_height = 800
         self.bg_color = (20, 20, 20)  # Gray background
-        self.speedup = 1.05
+        self.speedup = 1.01
         self.score = 0
 
         # Bar settings

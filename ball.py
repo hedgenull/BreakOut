@@ -30,7 +30,7 @@ class Ball(Sprite):
     def initialize_position_settings(self):
         """Initialize the ball's speed, position and direction."""
         # Center the ball on the bar.
-        self.rect.centerx = self.screen_rect.centerx
+        self.rect.centerx = self.game.bar.rect.centerx
         self.rect.bottom = self.game.bar.rect.top - 5
 
         # Starting direction and speed of the ball

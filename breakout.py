@@ -82,12 +82,10 @@ class BreakOut:
             self.lives -= 1
 
             # Center the bar
-            self.bar.rect.midbottom = self.screen_rect.midbottom
+            self.bar.center_rect()
 
             # Reset ball's position, but keep the speed
-            current_ball_speed = self.ball.speed
             self.ball.initialize_position_settings()
-            self.ball.speed = current_ball_speed
         else:
             sys.exit()
 

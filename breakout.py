@@ -17,6 +17,7 @@ from brick import Brick
 
 from pygame.sprite import Group
 
+
 class BreakOut:
     """Base class for BreakOut game."""
     def __init__(self):
@@ -39,7 +40,7 @@ class BreakOut:
 
         # Initialize group of bricks.
         self.bricks = Group()
-        self._create_array()
+        # self._create_array()
 
     def run(self):
         while True:
@@ -53,7 +54,7 @@ class BreakOut:
         self.ball.update()
         self.bar.blitme()
         self.ball.blitme()
-        self.bricks.draw(self.screen)
+        # self.bricks.update()
         pygame.display.flip()
 
     def _check_events(self):
@@ -94,7 +95,7 @@ class BreakOut:
             self.ball.initialize_position_settings()
         else:
             sys.exit()
-    
+
     def _create_array(self):
         """Create the array of bricks."""
         # Create a brick and find the number of bricks in a row.

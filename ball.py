@@ -18,6 +18,7 @@ class Ball(Sprite):
     """Ball class for the BreakOut game."""
     def __init__(self, game):
         """Initialize the ball and set its properties."""
+        super().__init__()
         self.game = game
         self.screen = game.screen
         self.screen_rect = self.screen.get_rect()

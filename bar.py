@@ -16,6 +16,7 @@ class Bar(Sprite):
     """Bar class that player controls in the BreakOut game."""
     def __init__(self, game):
         """Initialize the bar and set its properties."""
+        super().__init__()
         self.game = game
         self.screen: pygame.Surface = game.screen
         self.screen_rect = self.screen.get_rect()

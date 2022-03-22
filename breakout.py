@@ -13,7 +13,9 @@ import pygame, sys, time
 from settings import Settings
 from bar import Bar
 from ball import Ball
+from brick import Brick
 
+from pygame.sprite import Group
 
 class BreakOut:
     """Base class for BreakOut game."""
@@ -35,10 +37,13 @@ class BreakOut:
         self.ball = Ball(self)
         self.lives = self.settings.lives
 
+        # Initialize group of bricks.
+        self.bricks = Group()
+        self._create_array()
+
     def run(self):
         while True:
             self._check_events()
-
             self._update_screen()
 
     def _update_screen(self):
@@ -48,6 +53,7 @@ class BreakOut:
         self.ball.update()
         self.bar.blitme()
         self.ball.blitme()
+        self.bricks.draw(self.screen)
         pygame.display.flip()
 
     def _check_events(self):
@@ -88,6 +94,35 @@ class BreakOut:
             self.ball.initialize_position_settings()
         else:
             sys.exit()
+    
+    def _create_array(self):
+        """Create the array of bricks."""
+        # Create a brick and find the number of bricks in a row.
+        # Spacing between each brick is equal to one brick width.
+        brick = Brick(self)
+        brick_width, brick_height = brick.rect.size
+        available_space_x = self.settings.screen_width - (2 * brick_width)
+        number_bricks_x = available_space_x // (2 * brick_width)
+
+        # Determine the number of rows of bricks that fit on the screen.
+        bar_height = self.bar.rect.height
+        available_space_y = (self.settings.screen_height - (3 * brick_height) -
+                             (5 * bar_height))
+        number_rows = available_space_y // (2 * brick_height)
+
+        # Create the fleet of bricks.
+        for row_number in range(number_rows):
+            for brick_number in range(number_bricks_x):
+                self._create_brick(brick_number, row_number)
+
+    def _create_brick(self, brick_number, row_number):
+        """Create an brick and place it in the row."""
+        brick = Brick(self)
+        brick_width, brick_height = brick.rect.size
+        brick.x = brick_width + 2 * brick_width * brick_number
+        brick.rect.x = brick.x
+        brick.rect.y = brick_height + 2 * brick.rect.height * row_number
+        self.bricks.add(brick)
 
 
 if __name__ == "__main__":

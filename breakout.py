@@ -26,6 +26,7 @@ class BreakOut:
         self.screen = pygame.display.set_mode(
             (self.settings.screen_width, self.settings.screen_height))
         pygame.display.set_caption("BreakOut")
+        self.screen_rect = self.screen.get_rect()
 
         # Initialize bar.
         self.bar = Bar(self)
@@ -72,13 +73,16 @@ class BreakOut:
             self.bar.moving_right = False
         elif event.key == pygame.K_LEFT:
             self.bar.moving_left = False
-    
+
     def _ball_lost(self):
         """Respond to when the ball goes off of the screen."""
-        time.sleep(3)
+        time.sleep(2)
         if self.lives > 0:
             # Decrement lives left
             self.lives -= 1
+
+            # Center the bar
+            self.bar.rect.midbottom = self.screen_rect.midbottom
 
             # Reset ball's position, but keep the speed
             current_ball_speed = self.ball.speed
@@ -86,7 +90,6 @@ class BreakOut:
             self.ball.speed = current_ball_speed
         else:
             sys.exit()
-
 
 
 if __name__ == "__main__":

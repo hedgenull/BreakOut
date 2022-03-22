@@ -31,7 +31,7 @@ class Ball(Sprite):
         """Initialize the ball's speed, position and direction."""
         # Center the ball on the bar.
         self.rect.centerx = self.screen_rect.centerx
-        self.rect.bottom = self.game.bar.rect.top - 10
+        self.rect.bottom = self.game.bar.rect.top - 5
 
         # Starting direction and speed of the ball
         self.possible_x_directions = [1, -1]
@@ -58,5 +58,5 @@ class Ball(Sprite):
             self.speed *= self.settings.speedup
 
         # Respond to the ball going off the screen
-        if self.rect.bottom > self.screen_rect.bottom:
+        if self.rect.top > self.screen_rect.bottom:
             self.game._ball_lost()

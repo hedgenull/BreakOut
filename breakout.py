@@ -35,15 +35,16 @@ class BreakOut:
     def run(self):
         while True:
             self._check_events()
-            self.bar.update()
+
             self._update_screen()
 
     def _update_screen(self):
         """Update the screen, assets, and fill the background."""
         self.screen.fill(self.settings.bg_color)
+        self.bar.update()
+        self.ball.update()
         self.bar.blitme()
         self.ball.blitme()
-        self.ball.speed *= self.settings.ball_speedup
         pygame.display.flip()
 
     def _check_events(self):

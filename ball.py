@@ -28,6 +28,11 @@ class Ball(Sprite):
         self.rect.centerx = self.screen_rect.centerx
         self.rect.bottom = self.game.bar.rect.top - 10
 
+        # Get the ball's position.
+        self.startpos = [self.x, self.y]
+        self.endpos = self.startpos
+        self.slope = None
+
     def blitme(self):
         """Draw the ball's image at its rect."""
         self.screen.blit(self.image, self.rect)

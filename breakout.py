@@ -40,7 +40,7 @@ class BreakOut:
 
         # Initialize group of bricks.
         self.bricks = Group()
-        # self._create_array()
+        self._create_array()
 
     def run(self):
         while True:
@@ -54,7 +54,7 @@ class BreakOut:
         self.ball.update()
         self.bar.blitme()
         self.ball.blitme()
-        # self.bricks.update()
+        self.bricks.update()
         pygame.display.flip()
 
     def _check_events(self):
@@ -102,17 +102,17 @@ class BreakOut:
         # Spacing between each brick is equal to one brick width.
         brick = Brick(self)
         brick_width, brick_height = brick.rect.size
-        available_space_x = self.settings.screen_width - (2 * brick_width)
-        number_bricks_x = available_space_x // (2 * brick_width)
+        available_space_x = self.settings.screen_width - brick_width
+        number_bricks_x = available_space_x // brick_width - 4
 
         # Determine the number of rows of bricks that fit on the screen.
         bar_height = self.bar.rect.height
-        available_space_y = (self.settings.screen_height - (3 * brick_height) -
+        available_space_y = (self.settings.screen_height - (brick_height) -
                              (5 * bar_height))
-        number_rows = available_space_y // (2 * brick_height)
+        number_rows = available_space_y // brick_height - 13
 
         # Create the fleet of bricks.
-        for row_number in range(number_rows):
+        for row_number in range(int(number_rows)):
             for brick_number in range(number_bricks_x):
                 self._create_brick(brick_number, row_number)
 

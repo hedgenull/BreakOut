@@ -61,3 +61,7 @@ class Ball(Sprite):
         # Respond to the ball going off the screen
         if self.rect.top > self.screen_rect.bottom:
             self.game._ball_lost()
+        
+        # Respond to the ball hitting a brick
+        collisions = pygame.sprite.groupcollide(self.game.bricks, self.rect, True, False)
+        self.game._check_ball_brick_hit(collisions)

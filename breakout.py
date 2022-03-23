@@ -31,6 +31,8 @@ class BreakOut:
         pygame.display.set_caption("BreakOut")
         self.screen_rect = self.screen.get_rect()
 
+        self.score = self.settings.score
+
         # Initialize bar.
         self.bar = Bar(self)
 
@@ -124,6 +126,16 @@ class BreakOut:
         brick.rect.x = brick.x
         brick.rect.y = brick_height + 2 * brick.rect.height * row_number
         self.bricks.add(brick)
+    
+    def _check_ball_brick_hit(self, collisions):
+        """Check for collisions between the ball and any bricks."""
+        if collisions:
+            for bricks in collisions.values():
+                self.score += self.settings.brick_points
+
+        if not self.bricks:
+            # Destroy existing bricks and create a new array of bricks.
+            self._create_fleet()
 
 
 if __name__ == "__main__":

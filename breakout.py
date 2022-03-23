@@ -52,6 +52,7 @@ class BreakOut:
     def _update_screen(self):
         """Update the screen, assets, and fill the background."""
         self.screen.fill(self.settings.bg_color)
+        self._check_ball_brick_hit()
         self.bar.update()
         self.ball.update()
         self.bar.blitme()
@@ -126,15 +127,21 @@ class BreakOut:
         brick.rect.x = brick.x
         brick.rect.y = brick_height + 2 * brick.rect.height * row_number
         self.bricks.add(brick)
-    
-    def _check_ball_brick_hit(self, collisions):
+
+    def _check_ball_brick_hit(self):
         """Check for collisions between the ball and any bricks."""
+        # Respond to the ball hitting a brick
+        collisions = pygame.sprite.spritecollide(self.ball, self.bricks, True)
+
         if collisions:
-            for bricks in collisions.values():
+            for brick in collisions:
                 self.score += self.settings.brick_points
+            dx, dy = self.ball.direction
+            self.ball.direction = dx, -dy
 
         if not self.bricks:
             # Destroy existing bricks and create a new array of bricks.
+            self.bricks.empty()
             self._create_fleet()
 
 

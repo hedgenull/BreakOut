@@ -34,8 +34,7 @@ class Ball(Sprite):
         self.rect.midbottom = self.game.bar.rect.midtop
 
         # Starting direction and speed of the ball
-        possible_x_directions = [1, -1]
-        self.direction = random.choice(possible_x_directions), -1
+        self.direction = random.choice([1, -1]), -1
         self.speed = self.settings.ball_speed
 
     def blitme(self):
@@ -54,7 +53,11 @@ class Ball(Sprite):
             self.speed *= self.settings.speedup
 
         # Bounce the ball off the top wall or the bar
-        if self.rect.top <= 0 or self.rect.colliderect(self.game.bar.toprect):
+        if self.rect.top <= 0:
+            self.direction = dx, -dy
+            self.speed *= self.settings.speedup
+
+        if self.rect.colliderect(self.game.bar.toprect):
             self.direction = dx, -dy
             self.speed *= self.settings.speedup
 

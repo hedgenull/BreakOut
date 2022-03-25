@@ -86,7 +86,7 @@ class BreakOut:
 
     def _ball_lost(self):
         """Respond to when the ball goes off of the screen."""
-        time.sleep(1.5)
+        time.sleep(1)
         if self.lives > 0:
             # Decrement lives left
             self.lives -= 1

@@ -32,19 +32,20 @@ class Bar(Sprite):
         self.moving_left = False
         self.moving_right = False
         self.speed = self.settings.bar_speed
-        self.x = float(self.rect.x)
 
         # Center the rect.
         self.center_rect()
 
+
+        
+
     def update(self):
         """Update the bar based on the movement flags."""
         if self.moving_left and self.rect.left > self.screen_rect.left:
-            self.x -= self.speed
+            self.rect.x -= self.speed
         if self.moving_right and self.rect.right < self.screen_rect.right:
-            self.x += self.speed
-        self.rect.x = self.x
-        self.toprect.x = self.x
+            self.rect.x += self.speed
+        self.toprect.x = self.rect.x
 
     def blitme(self):
         """Draw the bar at its current position."""

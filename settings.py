@@ -21,7 +21,7 @@ class Settings:
         self.score = 0
 
         # Bar settings
-        self.bar_speed = 2.5
+        self.bar_speed = 3
         self.bar_color = (255, 0, 0)  # Red bar
 
         # Ball settings
@@ -29,6 +29,6 @@ class Settings:
         self.lives = 3
 
         # Brick settings
-        self.brick_color = (0, 0, 255) # Blue bricks
+        self.brick_color = (0, 100, 255) # Blue bricks
         self.brick_points = 10
         self.brick_hitpoints = 1

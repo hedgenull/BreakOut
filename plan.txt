@@ -2,8 +2,8 @@ Breakout plan:
 
 [1. Create bar and make it move with arrow keys.]
 [2. Create ball and make it bounce off of objects.]
-3. Create bricks.
-4. Make bricks disappear when hit with the ball.
+[3. Create bricks.]
+[4. Make bricks disappear when hit with the ball.]
 [5. Make the ball disappear when it goes off the screen.]
 6. Add a scoring system (points, increasing point values, high score, etc.).
 [7. Make the game move faster and faster. Make a certain amount of expendable balls.]

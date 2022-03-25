@@ -86,7 +86,7 @@ class BreakOut:
 
     def _ball_lost(self):
         """Respond to when the ball goes off of the screen."""
-        time.sleep(2)
+        time.sleep(1.5)
         if self.lives > 0:
             # Decrement lives left
             self.lives -= 1
@@ -94,7 +94,7 @@ class BreakOut:
             # Center the bar
             self.bar.center_rect()
 
-            # Reset ball's position, but keep the speed
+            # Reset ball's position and speed
             self.ball.initialize_position_settings()
         else:
             sys.exit()

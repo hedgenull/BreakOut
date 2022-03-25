@@ -31,12 +31,11 @@ class Ball(Sprite):
     def initialize_position_settings(self):
         """Initialize the ball's speed, position and direction."""
         # Center the ball on the bar.
-        self.rect.centerx = self.game.bar.rect.centerx
-        self.rect.bottom = self.game.bar.rect.top - 5
+        self.rect.midbottom = self.game.bar.rect.midtop
 
         # Starting direction and speed of the ball
-        self.possible_x_directions = [1, -1]
-        self.direction = random.choice(self.possible_x_directions), -1
+        possible_x_directions = [1, -1]
+        self.direction = random.choice(possible_x_directions), -1
         self.speed = self.settings.ball_speed
 
     def blitme(self):
@@ -45,6 +44,7 @@ class Ball(Sprite):
 
     def update(self):
         """Move the ball and bounce it off of the walls."""
+        # Code found at https://wall-ball.readthedocs.io/en/latest/steps/step01.html
         dx, dy = self.direction
         self.rect.move_ip(self.speed * dx, self.speed * dy)
 
@@ -54,7 +54,7 @@ class Ball(Sprite):
             self.speed *= self.settings.speedup
 
         # Bounce the ball off the top wall or the bar
-        if self.rect.top <= 0 or self.rect.colliderect(self.game.bar.rect):
+        if self.rect.top <= 0 or self.rect.colliderect(self.game.bar.toprect):
             self.direction = dx, -dy
             self.speed *= self.settings.speedup
 

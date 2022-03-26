@@ -86,7 +86,7 @@ class BreakOut:
 
     def _ball_lost(self):
         """Respond to when the ball goes off of the screen."""
-        time.sleep(1)
+        time.sleep(3)
         if self.lives > 0:
             # Decrement lives left
             self.lives -= 1
@@ -141,7 +141,6 @@ class BreakOut:
 
         if not self.bricks:
             # Destroy existing bricks and create a new array of bricks.
-            self.bricks.empty()
             self._create_fleet()
 
 

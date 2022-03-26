@@ -14,6 +14,9 @@ from settings import Settings
 from bar import Bar
 from ball import Ball
 from brick import Brick
+from game_stats import GameStats
+from scoreboard import Scoreboard
+from button import Button
 
 from pygame.sprite import Group
 

@@ -1,7 +1,18 @@
+#================================================================================>
+# FILE NAME:  button.py
+#
+# PURPOSE:
+# Button for BreakOut game.
+#
+# CREATED DATE: 2022-03-26
+# AUTHOR:       Greyson Smith (mathopotamus@bearcreek.family)
+#================================================================================>
+
 import pygame.font
 
 
 class Button:
+    """A button class for the BreakOut game."""
     def __init__(self, game, msg):
         """Initialize button attributes."""
         self.screen = game.screen

@@ -1,3 +1,14 @@
+#================================================================================>
+# FILE NAME:  game_stats.py
+#
+# PURPOSE:
+# Class to keep track of statistics for the BreakOut game.
+#
+# CREATED DATE: 2022-03-26
+# AUTHOR:       Greyson Smith (mathopotamus@bearcreek.family)
+#================================================================================>
+
+
 class GameStats:
     """Track game stats for Alien Invasion."""
     def __init__(self, game):

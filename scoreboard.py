@@ -1,3 +1,13 @@
+#================================================================================>
+# FILE NAME:  scoreboard.py
+#
+# PURPOSE:
+# Scoreboard class for the BreakOut game.
+#
+# CREATED DATE: 2022-03-26
+# AUTHOR:       Greyson Smith (mathopotamus@bearcreek.family)
+#================================================================================>
+
 import pygame.font
 from pygame.sprite import Group
 
@@ -54,12 +64,12 @@ class Scoreboard:
         level_str = str(self.stats.level)
         self.level_image = self.font.render(level_str, True, self.text_color,
                                             self.settings.bg_color)
-        
+
         # Position the level below the score.
         self.level_rect = self.level_image.get_rect()
         self.level_rect.right = self.score_rect.right
         self.level_rect.top = self.score_rect.bottom + 10
-    
+
     def prep_ball_group(self):
         """Show how many balls are left."""
         self.balls = Group()

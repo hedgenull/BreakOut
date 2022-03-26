@@ -34,33 +34,46 @@ class BreakOut:
         pygame.display.set_caption("BreakOut")
         self.screen_rect = self.screen.get_rect()
 
-        self.score = self.settings.score
+        # Create an instance to store game stats, and create a scoreboard.
+        self.stats = GameStats(self)
+        self.sb = Scoreboard(self)
 
         # Initialize bar.
         self.bar = Bar(self)
 
         # Initialize ball.
         self.ball = Ball(self)
-        self.lives = self.settings.lives
+        self.ball.initialize_position_settings()
 
         # Initialize group of bricks.
         self.bricks = Group()
         self._create_array()
 
+        # Make the Play button.
+        self.play_button = Button(self, "Play")
+
     def run(self):
         while True:
             self._check_events()
+            if self.stats.game_active:
+                self.bar.update()
+                self.ball.update()
+                self.bar.blitme()
+                self.ball.blitme()
+                self.bricks.update()
             self._update_screen()
 
     def _update_screen(self):
-        """Update the screen, assets, and fill the background."""
+        """Update the screen and fill the background."""
         self.screen.fill(self.settings.bg_color)
-        self._check_ball_brick_hit()
-        self.bar.update()
-        self.ball.update()
-        self.bar.blitme()
-        self.ball.blitme()
-        self.bricks.update()
+
+        # Draw the score information.
+        self.sb.show_score()
+
+        # Draw the play button if the game is inactive.
+        if not self.stats.game_active:
+            self.play_button.draw_button()
+
         pygame.display.flip()
 
     def _check_events(self):
@@ -72,6 +85,36 @@ class BreakOut:
                 self._check_keydown_events(event)
             elif event.type == pygame.KEYUP:
                 self._check_keyup_events(event)
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                self._check_play_button(mouse_pos)
+        self._check_ball_brick_hit()
+
+    def _check_play_button(self, mouse_pos):
+        """Respond when the player clicks the play button."""
+        button_clicked = self.play_button.rect.collidepoint(mouse_pos)
+        if button_clicked and not self.stats.game_active:
+            self._start_game()
+
+    def _start_game(self):
+        """Start a new game."""
+        # Reset the game statistics.
+        self.stats.reset_stats()
+        self.stats.game_active = True
+        self.sb.prep_score()
+        self.sb.prep_level()
+        self.sb.prep_ball_group()
+
+        # Get rid of any remaining bricks.
+        self.bricks.empty()
+
+        # Create a new array of bricks and center the bar/ball.
+        self._create_array()
+        self.bar.center_rect()
+        self.ball.initialize_position_settings()
+
+        # Hide the mouse cursor.
+        pygame.mouse.set_visible(False)
 
     def _check_keydown_events(self, event):
         if event.key == pygame.K_RIGHT:
@@ -90,9 +133,9 @@ class BreakOut:
     def _ball_lost(self):
         """Respond to when the ball goes off of the screen."""
         time.sleep(3)
-        if self.lives > 0:
+        if self.stats.lives_left > 0:
             # Decrement lives left
-            self.lives -= 1
+            self.stats.lives_left -= 1
 
             # Center the bar
             self.bar.center_rect()
@@ -100,7 +143,8 @@ class BreakOut:
             # Reset ball's position and speed
             self.ball.initialize_position_settings()
         else:
-            sys.exit()
+            self.stats.game_active = False
+            pygame.mouse.set_visible(True)
 
     def _create_array(self):
         """Create the array of bricks."""
@@ -138,7 +182,7 @@ class BreakOut:
 
         if collisions:
             for brick in collisions:
-                self.score += self.settings.brick_points
+                self.stats.score += self.settings.brick_points
             dx, dy = self.ball.direction
             self.ball.direction = dx, -dy
 

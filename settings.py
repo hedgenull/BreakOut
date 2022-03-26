@@ -22,13 +22,13 @@ class Settings:
 
         # Bar settings
         self.bar_speed = 3
-        self.bar_color = (233,215,0)  # Yellow bar
+        self.bar_color = (233, 215, 0)  # Yellow bar
 
         # Ball settings
         self.ball_speed = 1
         self.lives = 3
 
         # Brick settings
-        self.brick_color = 	(233,215,0) # Yellow bricks
+        self.brick_color = 	(233, 215, 0) # Yellow bricks
         self.brick_points = 10
         self.brick_hitpoints = 1

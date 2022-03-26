@@ -26,8 +26,6 @@ class Ball(Sprite):
         self.image = pygame.image.load("assets/ball.png")
         self.rect = self.image.get_rect()
 
-        self.initialize_position_settings()
-
     def initialize_position_settings(self):
         """Initialize the ball's speed, position and direction."""
         # Center the ball on the bar.

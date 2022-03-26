@@ -18,6 +18,7 @@ class Scoreboard:
     """A class to report scoring information."""
     def __init__(self, game):
         """Initialize scorekeeping attributes."""
+        pygame.font.init()
         self.game = game
         self.screen = game.screen
         self.screen_rect = self.screen.get_rect()
@@ -25,7 +26,7 @@ class Scoreboard:
         self.stats = game.stats
 
         # Font settings for scoring information.
-        self.text_color = (30, 30, 30)
+        self.text_color = (233, 215, 0)
         self.font = pygame.font.SysFont(None, 48)
 
         # Prepare the initial score images.
@@ -72,8 +73,8 @@ class Scoreboard:
 
     def prep_ball_group(self):
         """Show how many balls are left."""
-        self.balls = Group()
-        for ball_number in range(self.stats.balls_left):
+        self.ball_group = Group()
+        for ball_number in range(self.stats.lives_left):
             ball = Ball(self.game)
             ball.rect.x = 10 + ball_number * ball.rect.width
             ball.rect.y = 10
@@ -84,7 +85,7 @@ class Scoreboard:
         self.screen.blit(self.score_image, self.score_rect)
         self.screen.blit(self.high_score_image, self.high_score_rect)
         self.screen.blit(self.level_image, self.level_rect)
-        self.balls.draw(self.screen)
+        self.ball_group.draw(self.screen)
 
     def check_high_score(self):
         """Check to see if there's a new high score."""

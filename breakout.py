@@ -59,9 +59,6 @@ class BreakOut:
             if self.stats.game_active:
                 self.bar.update()
                 self.ball.update()
-                self.bar.blitme()
-                self.ball.blitme()
-                self.bricks.update()
             self._update_screen()
 
     def _update_screen(self):
@@ -74,6 +71,10 @@ class BreakOut:
         # Draw the play button if the game is inactive.
         if not self.stats.game_active:
             self.play_button.draw_button()
+
+        self.bar.blitme()
+        self.ball.blitme()
+        self.bricks.update()
 
         pygame.display.flip()
 

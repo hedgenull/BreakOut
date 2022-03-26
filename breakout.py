@@ -53,6 +53,7 @@ class BreakOut:
         self.play_button = Button(self, "Play")
 
     def run(self):
+        """Run the game."""
         while True:
             self._check_events()
             if self.stats.game_active:

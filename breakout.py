@@ -48,6 +48,7 @@ class BreakOut:
         self._create_array()
 
     def run(self):
+        """Run the game."""
         while True:
             self._check_events()
             self._update_screen()

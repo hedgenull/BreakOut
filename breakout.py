@@ -91,6 +91,20 @@ class BreakOut:
                 self._check_play_button(mouse_pos)
         self._check_ball_brick_hit()
 
+    def _check_keydown_events(self, event):
+        if event.key == pygame.K_RIGHT:
+            self.bar.moving_right = True
+        elif event.key == pygame.K_LEFT:
+            self.bar.moving_left = True
+        elif event.key == pygame.K_q or event.key == pygame.K_ESCAPE:
+            sys.exit()
+
+    def _check_keyup_events(self, event):
+        if event.key == pygame.K_RIGHT:
+            self.bar.moving_right = False
+        elif event.key == pygame.K_LEFT:
+            self.bar.moving_left = False
+
     def _check_play_button(self, mouse_pos):
         """Respond when the player clicks the play button."""
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
@@ -116,20 +130,6 @@ class BreakOut:
 
         # Hide the mouse cursor.
         pygame.mouse.set_visible(False)
-
-    def _check_keydown_events(self, event):
-        if event.key == pygame.K_RIGHT:
-            self.bar.moving_right = True
-        elif event.key == pygame.K_LEFT:
-            self.bar.moving_left = True
-        elif event.key == pygame.K_q or event.key == pygame.K_ESCAPE:
-            sys.exit()
-
-    def _check_keyup_events(self, event):
-        if event.key == pygame.K_RIGHT:
-            self.bar.moving_right = False
-        elif event.key == pygame.K_LEFT:
-            self.bar.moving_left = False
 
     def _ball_lost(self):
         """Respond to when the ball goes off of the screen."""

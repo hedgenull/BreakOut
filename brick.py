@@ -5,7 +5,7 @@
 # Brick class for BreakOut game.
 #
 # CREATED DATE: 2022-03-22
-# AUTHOR:       Greyson Smith (mathopotamus@bearcreek.family)
+# AUTHOR:       @hedgenull
 #================================================================================>
 
 import pygame

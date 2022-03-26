@@ -5,7 +5,7 @@
 # Button for BreakOut game.
 #
 # CREATED DATE: 2022-03-26
-# AUTHOR:       Greyson Smith (mathopotamus@bearcreek.family)
+# AUTHOR:       @hedgenull
 #================================================================================>
 
 import pygame.font

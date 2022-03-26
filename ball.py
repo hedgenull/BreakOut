@@ -5,7 +5,7 @@
 # Ball class for the BreakOut game.
 #
 # CREATED DATE: 2022-03-19
-# AUTHOR:       Greyson Smith (mathopotamus@bearcreek.family)
+# AUTHOR:       @hedgenull
 #================================================================================>
 
 import random

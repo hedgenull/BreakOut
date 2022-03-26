@@ -5,7 +5,7 @@
 # Settings for BreakOut game.
 #
 # CREATED DATE: 2022-03-18
-# AUTHOR:       Greyson Smith (mathopotamus@bearcreek.family)
+# AUTHOR:       @hedgenull
 #================================================================================>
 
 

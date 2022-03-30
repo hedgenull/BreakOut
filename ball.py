@@ -48,16 +48,13 @@ class Ball(Sprite):
         # Bounce the ball off the left or right walls
         if self.rect.right >= self.screen_rect.width or self.rect.left <= 0:
             self.direction = -dx, dy
-            self.speed *= self.settings.speedup
 
         # Bounce the ball off the top wall or the bar
         if self.rect.top <= 0:
             self.direction = dx, -dy
-            self.speed *= self.settings.speedup
 
         if self.rect.colliderect(self.game.bar.toprect):
             self.direction = dx, -dy
-            self.speed *= self.settings.speedup
 
         # Respond to the ball going off the screen
         if self.rect.top > self.screen_rect.bottom:

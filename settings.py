@@ -17,7 +17,7 @@ class Settings:
         self.screen_width = 1200
         self.screen_height = 800
         self.bg_color = (40, 40, 40)  # Gray background
-        self.speedup = 1.01
+        self.speedup = 1.1
         self.score = 0
 
         # Bar settings
@@ -26,9 +26,13 @@ class Settings:
 
         # Ball settings
         self.ball_speed = 1
-        self.lives = 3
+        self.lives = 6
 
         # Brick settings
         self.brick_color = 	(233, 215, 0) # Yellow bricks
         self.brick_points = 10
         self.brick_hitpoints = 1
+    
+    def speedup(self):
+        self.bar_speed *= self.speedup
+        self.ball_speed *= self.speedup

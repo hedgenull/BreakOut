@@ -62,19 +62,20 @@ class BreakOut:
             self._update_screen()
 
     def _update_screen(self):
-        """Update the screen and fill the background."""
+        """Update the screen and assets and fill the background."""
         self.screen.fill(self.settings.bg_color)
 
         # Draw the score information.
         self.sb.show_score()
 
-        # Draw the play button if the game is inactive.
-        if not self.stats.game_active:
-            self.play_button.draw_button()
-
+        # Draw the bar, ball, and bricks.
         self.bar.blitme()
         self.ball.blitme()
         self.bricks.update()
+
+        # Draw the play button if the game is inactive.
+        if not self.stats.game_active:
+            self.play_button.draw_button()
 
         pygame.display.flip()
 
@@ -97,6 +98,9 @@ class BreakOut:
             self.bar.moving_right = True
         elif event.key == pygame.K_LEFT:
             self.bar.moving_left = True
+        elif event.key == pygame.K_p or event.key == pygame.K_RETURN:
+            if not self.stats.game_active:
+                self._start_game()
         elif event.key == pygame.K_q or event.key == pygame.K_ESCAPE:
             sys.exit()
 
@@ -142,8 +146,9 @@ class BreakOut:
             # Center the bar
             self.bar.center_rect()
 
-            # Reset ball's position and speed
+            # Reset ball's position and speed, and update balls left on the scoreboard
             self.ball.initialize_position_settings()
+            self.sb.prep_ball_group()
         else:
             self.stats.game_active = False
             pygame.mouse.set_visible(True)
@@ -174,7 +179,7 @@ class BreakOut:
         brick_width, brick_height = brick.rect.size
         brick.x = brick_width + 2 * brick_width * brick_number
         brick.rect.x = brick.x
-        brick.rect.y = brick_height + 2 * brick.rect.height * row_number
+        brick.rect.y = (brick_height + 2 * brick.rect.height * row_number) + 35
         self.bricks.add(brick)
 
     def _check_ball_brick_hit(self):
@@ -185,12 +190,22 @@ class BreakOut:
         if collisions:
             for brick in collisions:
                 self.stats.score += self.settings.brick_points
-            dx, dy = self.ball.direction
-            self.ball.direction = dx, -dy
+                self.sb.prep_score()
+                self.sb.check_high_score()
 
-        if not self.bricks:
+            # Bounce the ball off the brick.
+            self.ball.direction = self.ball.direction[
+                0], -self.ball.direction[1]
+
+        if len(self.bricks) <= 0:
             # Destroy existing bricks and create a new array of bricks.
             self._create_fleet()
+            self.stats.level += 1
+            self.settings.speedup()
+            time.sleep(3)
+            self.bar.center_rect()
+            self.ball.initialize_position_settings()
+            self.sb.prep_score()
 
 
 if __name__ == "__main__":

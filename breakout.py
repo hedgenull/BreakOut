@@ -104,7 +104,6 @@ class BreakOut:
         elif event.key == pygame.K_q or event.key == pygame.K_ESCAPE:
             self._quit_game()
 
-
     def _check_keyup_events(self, event):
         if event.key == pygame.K_RIGHT:
             self.bar.moving_right = False
@@ -209,7 +208,7 @@ class BreakOut:
             self.bar.center_rect()
             self.ball.initialize_position_settings()
             self.sb.prep_score()
-    
+
     def _quit_game(self):
         """Quit the game and save the high score."""
         # Save high score
@@ -218,6 +217,7 @@ class BreakOut:
         # Quit the program
         pygame.quit()
         sys.exit()
+
 
 if __name__ == "__main__":
     breakout = BreakOut()

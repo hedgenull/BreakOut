@@ -142,12 +142,14 @@ class BreakOut:
             # Decrement lives left
             self.stats.lives_left -= 1
 
+            # Start a new round
             self._new_round()
         else:
             self.stats.game_active = False
             pygame.mouse.set_visible(True)
 
     def _new_round(self):
+        """Center the elements on the screen and initialize some settings."""
         # Center the bar
         self.bar.center_rect()
 
@@ -201,13 +203,11 @@ class BreakOut:
 
         if len(self.bricks) <= 0:
             # Destroy existing bricks and create a new array of bricks.
-            self._create_fleet()
+            self._create_array()
             self.stats.level += 1
             self.settings.speedup()
             time.sleep(3)
-            self.bar.center_rect()
-            self.ball.initialize_position_settings()
-            self.sb.prep_score()
+            self._new_round()
 
     def _quit_game(self):
         """Quit the game and save the high score."""

@@ -83,7 +83,7 @@ class BreakOut:
         """Respond to keypresses and mouse events."""
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                sys.exit()
+                self._quit_game()
             elif event.type == pygame.KEYDOWN:
                 self._check_keydown_events(event)
             elif event.type == pygame.KEYUP:
@@ -102,8 +102,7 @@ class BreakOut:
             if not self.stats.game_active:
                 self._start_game()
         elif event.key == pygame.K_q or event.key == pygame.K_ESCAPE:
-            self.stats.save_high_score()
-            sys.exit()
+            self._quit_game()
 
 
     def _check_keyup_events(self, event):
@@ -132,8 +131,7 @@ class BreakOut:
 
         # Create a new array of bricks and center the bar/ball.
         self._create_array()
-        self.bar.center_rect()
-        self.ball.initialize_position_settings()
+        self._new_round()
 
         # Hide the mouse cursor.
         pygame.mouse.set_visible(False)
@@ -145,15 +143,18 @@ class BreakOut:
             # Decrement lives left
             self.stats.lives_left -= 1
 
-            # Center the bar
-            self.bar.center_rect()
-
-            # Reset ball's position and speed, and update balls left on the scoreboard
-            self.ball.initialize_position_settings()
-            self.sb.prep_ball_group()
+            self._new_round()
         else:
             self.stats.game_active = False
             pygame.mouse.set_visible(True)
+
+    def _new_round(self):
+        # Center the bar
+        self.bar.center_rect()
+
+        # Reset ball's position and speed, and update balls left on the scoreboard
+        self.ball.initialize_position_settings()
+        self.sb.prep_ball_group()
 
     def _create_array(self):
         """Create the array of bricks."""
@@ -208,7 +209,15 @@ class BreakOut:
             self.bar.center_rect()
             self.ball.initialize_position_settings()
             self.sb.prep_score()
+    
+    def _quit_game(self):
+        """Quit the game and save the high score."""
+        # Save high score
+        self.stats.save_high_score()
 
+        # Quit the program
+        pygame.quit()
+        sys.exit()
 
 if __name__ == "__main__":
     breakout = BreakOut()

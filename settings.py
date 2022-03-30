@@ -32,6 +32,9 @@ class Settings:
         self.brick_color = 	(233, 215, 0) # Yellow bricks
         self.brick_points = 10
         self.brick_hitpoints = 1
+
+        # Help-menu settings
+        self.menu_color = (255, 0, 0)   # Red menu background
     
     def speedup(self):
         """Speed up the ball and bar."""

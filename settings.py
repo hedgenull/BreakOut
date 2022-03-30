@@ -34,5 +34,6 @@ class Settings:
         self.brick_hitpoints = 1
     
     def speedup(self):
+        """Speed up the ball and bar."""
         self.bar_speed *= self.speedup
         self.ball_speed *= self.speedup

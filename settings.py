@@ -29,7 +29,7 @@ class Settings:
         self.lives = 6
 
         # Brick settings
-        self.brick_color = 	(233, 215, 0) # Yellow bricks
+        self.brick_color = (233, 215, 0) # Yellow bricks
         self.brick_points = 10
         self.brick_hitpoints = 1
 

@@ -102,7 +102,9 @@ class BreakOut:
             if not self.stats.game_active:
                 self._start_game()
         elif event.key == pygame.K_q or event.key == pygame.K_ESCAPE:
+            self.stats.save_high_score()
             sys.exit()
+
 
     def _check_keyup_events(self, event):
         if event.key == pygame.K_RIGHT:

@@ -17,6 +17,7 @@ from brick import Brick
 from game_stats import GameStats
 from scoreboard import Scoreboard
 from button import Button
+from help_menu import HelpMenu
 
 from pygame.sprite import Group
 
@@ -52,6 +53,9 @@ class BreakOut:
         # Make the Play button.
         self.play_button = Button(self, "Play")
 
+        # Make the help menu.
+        self.menu = HelpMenu(self)
+
     def run(self):
         """Run the game."""
         while True:
@@ -76,6 +80,9 @@ class BreakOut:
         # Draw the play button if the game is inactive.
         if not self.stats.game_active:
             self.play_button.draw_button()
+            self.menu.button.draw_button()
+            if self.menu.drawn:
+                self.menu.draw()
 
         pygame.display.flip()
 
@@ -90,7 +97,7 @@ class BreakOut:
                 self._check_keyup_events(event)
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
-                self._check_play_button(mouse_pos)
+                self._check_buttons(mouse_pos)
         self._check_ball_brick_hit()
 
     def _check_keydown_events(self, event):
@@ -110,11 +117,14 @@ class BreakOut:
         elif event.key == pygame.K_LEFT:
             self.bar.moving_left = False
 
-    def _check_play_button(self, mouse_pos):
+    def _check_buttons(self, mouse_pos):
         """Respond when the player clicks the play button."""
-        button_clicked = self.play_button.rect.collidepoint(mouse_pos)
-        if button_clicked and not self.stats.game_active:
+        if self.play_button.rect.collidepoint(mouse_pos) and not self.stats.game_active:
             self._start_game()
+        if self.menu.button.rect.collidepoint(mouse_pos) and not self.menu.drawn:
+            self.menu.drawn = True
+        elif self.menu.button.rect.collidepoint(mouse_pos) and self.menu.drawn:
+            self.menu.drawn = False
 
     def _start_game(self):
         """Start a new game."""

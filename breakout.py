@@ -119,9 +119,12 @@ class BreakOut:
 
     def _check_buttons(self, mouse_pos):
         """Respond when the player clicks the play button."""
-        if self.play_button.rect.collidepoint(mouse_pos) and not self.stats.game_active:
+        if self.play_button.rect.collidepoint(
+                mouse_pos
+        ) and not self.stats.game_active and not self.menu.drawn:
             self._start_game()
-        if self.menu.button.rect.collidepoint(mouse_pos) and not self.menu.drawn:
+        if self.menu.button.rect.collidepoint(
+                mouse_pos) and not self.menu.drawn:
             self.menu.drawn = True
         elif self.menu.button.rect.collidepoint(mouse_pos) and self.menu.drawn:
             self.menu.drawn = False
@@ -174,7 +177,7 @@ class BreakOut:
         brick = Brick(self)
         brick_width, brick_height = brick.rect.size
         available_space_x = self.settings.screen_width - brick_width
-        number_bricks_x = available_space_x // brick_width - 4
+        number_bricks_x = available_space_x // brick_width - 7
 
         # Determine the number of rows of bricks that fit on the screen.
         bar_height = self.bar.rect.height
@@ -206,6 +209,7 @@ class BreakOut:
                 self.stats.score += self.settings.brick_points
                 self.sb.prep_score()
                 self.sb.check_high_score()
+                brick.kill()
 
             # Bounce the ball off the brick.
             self.ball.direction = self.ball.direction[
@@ -213,6 +217,7 @@ class BreakOut:
 
         if len(self.bricks) <= 0:
             # Destroy existing bricks and create a new array of bricks.
+            self.bricks.empty()
             self._create_array()
             self.stats.level += 1
             self.settings.speedup()

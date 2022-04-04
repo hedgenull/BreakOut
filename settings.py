@@ -17,7 +17,7 @@ class Settings:
         self.screen_width = 1200
         self.screen_height = 800
         self.bg_color = (40, 40, 40)  # Gray background
-        self.speedup = 1.1
+        self.speedup_scale = 1.1
         self.score = 0
 
         # Bar settings
@@ -38,5 +38,5 @@ class Settings:
     
     def speedup(self):
         """Speed up the ball and bar."""
-        self.bar_speed *= self.speedup
-        self.ball_speed *= self.speedup
+        self.bar_speed *= self.speedup_scale
+        self.ball_speed *= self.speedup_scale

@@ -26,7 +26,7 @@ class Settings:
 
         # Ball settings
         self.ball_speed = 1
-        self.lives = 6
+        self.lives = 7
 
         # Brick settings
         self.brick_color = (233, 215, 0) # Yellow bricks
@@ -40,4 +40,4 @@ class Settings:
         """Speed up the ball and bar."""
         self.bar_speed *= self.speedup_scale
         self.ball_speed *= self.speedup_scale
-        self.brick_points = round(self.brick_points * 1.5, -1)
+        self.brick_points = int(round(self.brick_points * 1.5, -1))

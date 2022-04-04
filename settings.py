@@ -40,3 +40,4 @@ class Settings:
         """Speed up the ball and bar."""
         self.bar_speed *= self.speedup_scale
         self.ball_speed *= self.speedup_scale
+        self.brick_points = round(self.brick_points * 1.5, -1)

@@ -220,6 +220,7 @@ class BreakOut:
             self.bricks.empty()
             self._create_array()
             self.stats.level += 1
+            self.stats.lives_left += 1
             self.settings.speedup()
             time.sleep(3)
             self._new_round()

@@ -36,16 +36,16 @@ class HelpMenu:
         self.instructions_text = [
             "BreakOut: A Python clone of Atari Breakout!",
             "BreakOut is a game where you control a yellow bar on the screen.",
-            "Use the left and right arrow keys to move the bar.",
-            "Above the bar is a grid of bricks and a ball.",
-            "The ball bounces around the screen and breaks the bricks when it hits them.",
-            "When you break a brick, it gets you points. Points increase over time.",
-            "Your job is to break all of the bricks before you run out of lives.",
-            "Each time the ball goes off of the screen, you lose a life.",
-            "Once you destroy all the bricks, they reappear and the game moves faster.",
-            "If you lose all of your lives, the 'Play' button appears on the center of the screen.",
-            "Click it or press 'P' or 'Enter' to restart the game.",
-            "Press 'Q', 'Escape', or click the close button at any time to quit the game."
+            "- Use the left and right arrow keys to move the bar.",
+            "- Above the bar is a grid of bricks and a ball.",
+            "- The ball bounces around the screen and breaks the bricks when it hits them.",
+            "- When you break a brick, it gets you points. Points increase over time.",
+            "- Your job is to break all of the bricks before you run out of lives.",
+            "- Each time the ball goes off of the screen, you lose a life.",
+            "- Once you destroy all the bricks, they reappear and the game moves faster.",
+            "- If you lose all of your lives, the 'Play' button appears on the center of the screen.",
+            "  Click it or press 'P' or 'Enter' to restart the game.",
+            "- Press 'Q', 'Escape', or click the close button at any time to quit the game."
         ]
         self.texts = []
 

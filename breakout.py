@@ -150,18 +150,17 @@ class BreakOut:
 
     def _ball_lost(self):
         """Respond to when the ball goes off of the screen."""
-        time.sleep(3)
         if self.stats.lives_left > 0:
             # Decrement lives left
             self.stats.lives_left -= 1
 
             # Start a new round
-            self._new_round()
+            self._new_round(3)
         else:
             self.stats.game_active = False
             pygame.mouse.set_visible(True)
 
-    def _new_round(self):
+    def _new_round(self, secs=0):
         """Center the elements on the screen and initialize some settings."""
         # Center the bar
         self.bar.center_rect()
@@ -169,6 +168,9 @@ class BreakOut:
         # Reset ball's position and speed, and update balls left on the scoreboard
         self.ball.initialize_position_settings()
         self.sb.prep_ball_group()
+
+        # Pause
+        time.sleep(secs)
 
     def _create_array(self):
         """Create the array of bricks."""
@@ -222,8 +224,7 @@ class BreakOut:
             self.stats.level += 1
             self.stats.lives_left += 1
             self.settings.speedup()
-            time.sleep(3)
-            self._new_round()
+            self._new_round(3)
 
     def _quit_game(self):
         """Quit the game and save the high score."""

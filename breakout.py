@@ -221,9 +221,11 @@ class BreakOut:
             # Destroy existing bricks and create a new array of bricks.
             self.bricks.empty()
             self._create_array()
-            self.stats.level += 1
             self.stats.lives_left += 1
             self.settings.speedup()
+            # Increment level
+            self.stats.level += 1
+            self.sb.prep_level()
             self._new_round(3)
 
     def _quit_game(self):

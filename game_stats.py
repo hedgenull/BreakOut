@@ -28,7 +28,7 @@ class GameStats:
         self.lives_left = self.settings.lives
         self.score = 0
         self.level = 1
-    
+
     def save_high_score(self):
         """Write the high score to the file for later retrieval."""
         with open("high_score.txt", "w") as f:

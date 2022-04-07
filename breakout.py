@@ -209,20 +209,24 @@ class BreakOut:
     def _check_ball_brick_hit(self):
         """Check for collisions between the ball and any bricks."""
         # Respond to the ball hitting a brick
-        collisions = pygame.sprite.spritecollide(self.ball, self.bricks, True)
 
-        if collisions:
-            for brick in collisions:
+        for brick in self.bricks:
+            if self.ball.rect.colliderect(brick.rect):
                 self.stats.score += self.settings.brick_points
                 self.sb.prep_score()
                 self.sb.check_high_score()
-                pygame.mixer.music.load(random.choice(self.settings.sounds))
+                
+                brick.hp -= 1
+                if brick.hp <= 0:
+                    pygame.mixer.music.load(self.settings.destroy_sound)
+                    brick.kill()
+                else:
+                    pygame.mixer.music.load(self.settings.break_sound)
+                
                 pygame.mixer.music.play(fade_ms=100)
-                brick.kill()
 
-            # Bounce the ball off the brick.
-            self.ball.direction = self.ball.direction[
-                0], -self.ball.direction[1]
+                # Bounce the ball off the brick.
+                self.ball.direction = self.ball.direction[0], -self.ball.direction[1]
 
         if len(self.bricks) <= 0:
             # Destroy existing bricks and create a new array of bricks.

@@ -32,17 +32,19 @@ class Settings:
         self.brick_color = (233, 215, 0)  # Yellow bricks
         self.brick_points = 10
         self.brick_hitpoints = 1
+        self.brick_hp_increase = 0.25
 
         # Help-menu settings
         self.menu_color = (255, 0, 0)  # Red menu background
 
         # Sound effects
         self.volume = 0.75
-        self.sounds = ["assets/break1.mp3", "assets/break2.mp3"]
-
+        self.destroy_sound = "assets/destroy.mp3"
+        self.break_sound = "assets/break.mp3"
 
     def speedup(self):
         """Speed up the ball and bar."""
         self.bar_speed *= self.speedup_scale
         self.ball_speed *= self.speedup_scale
         self.brick_points = int(round(self.brick_points * 1.5, -1))
+        self.brick_hitpoints += self.brick_hp_increase

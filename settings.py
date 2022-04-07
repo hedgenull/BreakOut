@@ -36,6 +36,11 @@ class Settings:
         # Help-menu settings
         self.menu_color = (255, 0, 0)  # Red menu background
 
+        # Sound effects
+        self.volume = 0.75
+        self.sounds = ["assets/break1.mp3", "assets/break2.mp3"]
+
+
     def speedup(self):
         """Speed up the ball and bar."""
         self.bar_speed *= self.speedup_scale

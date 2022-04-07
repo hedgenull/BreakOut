@@ -8,7 +8,7 @@
 # AUTHOR:       @hedgenull
 #================================================================================>
 
-import pygame, sys, time
+import pygame, sys, time, random
 
 from settings import Settings
 from bar import Bar
@@ -20,6 +20,7 @@ from button import Button
 from help_menu import HelpMenu
 
 from pygame.sprite import Group
+import pygame.mixer
 
 
 class BreakOut:
@@ -55,6 +56,10 @@ class BreakOut:
 
         # Make the help menu.
         self.menu = HelpMenu(self)
+
+        # Load brick sounds
+        pygame.mixer.init()
+        pygame.mixer.music.set_volume(self.settings.volume)
 
     def run(self):
         """Run the game."""
@@ -211,6 +216,8 @@ class BreakOut:
                 self.stats.score += self.settings.brick_points
                 self.sb.prep_score()
                 self.sb.check_high_score()
+                pygame.mixer.music.load(random.choice(self.settings.sounds))
+                pygame.mixer.music.play(fade_ms=100)
                 brick.kill()
 
             # Bounce the ball off the brick.

@@ -17,7 +17,7 @@ class Settings:
         self.screen_width = 1200
         self.screen_height = 800
         self.bg_color = (40, 40, 40)  # Gray background
-        self.speedup_scale = 1.05
+        self.speedup_scale = 1.07
         self.score = 0
 
         # Bar settings
@@ -32,7 +32,7 @@ class Settings:
         self.brick_color = (233, 215, 0)  # Yellow bricks
         self.brick_points = 10
         self.brick_hitpoints = 1
-        self.brick_hp_increase = 0.25
+        self.brick_hp_scale = 1.25
 
         # Help-menu settings
         self.menu_color = (255, 0, 0)  # Red menu background
@@ -46,5 +46,5 @@ class Settings:
         """Speed up the ball and bar."""
         self.bar_speed *= self.speedup_scale
         self.ball_speed *= self.speedup_scale
+        self.brick_hitpoints *= self.brick_hp_scale
         self.brick_points = int(round(self.brick_points * 1.5, -1))
-        self.brick_hitpoints += self.brick_hp_increase

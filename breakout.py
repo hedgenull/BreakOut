@@ -177,6 +177,11 @@ class BreakOut:
         # Pause
         time.sleep(secs)
 
+        # Debug
+        print(self.stats.level)
+        print(self.settings.brick_hitpoints)
+        print(self.settings.ball_speed)
+
     def _create_array(self):
         """Create the array of bricks."""
         # Create a brick and find the number of bricks in a row.

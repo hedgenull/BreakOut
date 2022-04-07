@@ -26,6 +26,7 @@ class GameStats:
     def reset_stats(self):
         """Initialize statistics that can change during the game."""
         self.lives_left = self.settings.lives
+        self.settings.brick_hitpoints = 1
         self.score = 0
         self.level = 1
 

@@ -8,7 +8,7 @@
 # AUTHOR:       @hedgenull
 #================================================================================>
 
-import pygame, sys, time, random
+import pygame, sys, time
 
 from settings import Settings
 from bar import Bar
@@ -215,18 +215,19 @@ class BreakOut:
                 self.stats.score += self.settings.brick_points
                 self.sb.prep_score()
                 self.sb.check_high_score()
-                
+
                 brick.hp -= 1
                 if brick.hp <= 0:
                     pygame.mixer.music.load(self.settings.destroy_sound)
                     brick.kill()
                 else:
                     pygame.mixer.music.load(self.settings.break_sound)
-                
+
                 pygame.mixer.music.play(fade_ms=100)
 
                 # Bounce the ball off the brick.
-                self.ball.direction = self.ball.direction[0], -self.ball.direction[1]
+                self.ball.direction = self.ball.direction[
+                    0], -self.ball.direction[1]
 
         if len(self.bricks) <= 0:
             # Destroy existing bricks and create a new array of bricks.

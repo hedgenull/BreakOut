@@ -19,13 +19,13 @@ class Ball(Sprite):
     def __init__(self, game):
         """Initialize the ball and set its properties."""
         super().__init__()
-        self.in_bar = False
         self.game = game
         self.screen = game.screen
         self.screen_rect = self.screen.get_rect()
         self.settings = game.settings
         self.image = pygame.image.load("assets/ball.png")
         self.rect = self.image.get_rect()
+        self.in_bar = False
 
     def initialize_position_settings(self):
         """Initialize the ball's speed, position and direction."""
@@ -55,11 +55,17 @@ class Ball(Sprite):
             self.direction = dx, -dy
 
         if self.rect.colliderect(self.game.bar.rect):
-            if self.rect.bottom > self.game.bar.rect.top - self.speed and not self.in_bar:
-                self.direction = dx, -dy
-                self.in_bar = True
+            if not self.in_bar:
+                if self.rect.bottom >= self.game.bar.rect.top - self.speed:
+                    self.direction = dx, -dy
+                    self.in_bar = True
+                elif (self.rect.right >= self.game.bar.rect.left + self.speed
+                      or self.rect.left <= self.game.bar.rect.right - self.speed):
+                    self.direction = -dx, dy
+                    self.in_bar = True
         else:
-            self.in_bar = False
+            if self.in_bar:
+                self.in_bar = False
 
         # Respond to the ball going off the screen
         if self.rect.top > self.screen_rect.bottom:

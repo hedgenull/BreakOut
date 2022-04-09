@@ -8,7 +8,7 @@
 # AUTHOR:       @hedgenull
 #================================================================================>
 
-import pygame, sys, time
+import pygame, sys, time, random
 
 from settings import Settings
 from bar import Bar
@@ -226,8 +226,9 @@ class BreakOut:
                 pygame.mixer.music.play(fade_ms=100)
 
                 # Bounce the ball off the brick.
-                self.ball.direction = self.ball.direction[
-                    0], -self.ball.direction[1]
+                dx, dy = self.ball.direction
+                n1, n2 = random.choice([1, 1, -1]), random.choice([1, -1, -1])
+                self.ball.direction = dx * n1, dy * n2
 
         self.sb.check_high_score()
 

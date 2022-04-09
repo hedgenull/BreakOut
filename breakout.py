@@ -60,9 +60,9 @@ class BreakOut:
         # Hard mode?
         self.hard_mode = False
         self.hard_mode_button = Button(self, "Hard Mode")
-        self.hard_mode_button.rect.midtop = (self.play_button.rect.midbottom[0],
-                                             self.play_button.rect.midbottom[1] +
-                                             40)
+        self.hard_mode_button.rect.midtop = (
+            self.play_button.rect.midbottom[0],
+            self.play_button.rect.midbottom[1] + 40)
         self.hard_mode_button._prep_msg("Hard Mode")
 
         # Initialize group of bricks.
@@ -122,6 +122,10 @@ class BreakOut:
         elif event.key == pygame.K_p or event.key == pygame.K_RETURN:
             if not self.stats.game_active:
                 self._start_game()
+        elif event.key == pygame.K_h:
+            if not self.stats.game_active:
+                self._make_hard()
+                self._start_game()
         elif event.key == pygame.K_q or event.key == pygame.K_ESCAPE:
             self._quit_game()
 
@@ -170,14 +174,15 @@ class BreakOut:
             self._make_hard()
 
     def _make_hard(self):
+        """Change the settings to a hard state."""
+        self.hard_mode = True
         self.settings.bar_speed = 5
-        self.settings.ball_speed = 1.75
+        self.settings.ball_speed = 2
         self.settings.brick_hp = 2
         self.settings.brick_points = 30
-        self.settings.brick_hp_scale = 1.5
-        self.settings.speedup_scale = 1.1
-        self.settings.bar_color, self.settings.brick_color = (75, 60,
-                                                              0), (75, 60, 0)
+        self.settings.brick_hp_scale = 1.75
+        self.settings.bar_color, self.settings.brick_color = (130, 50,
+                                                              0), (130, 50, 0)
         self.bricks.empty()
         self._create_array()
         self._new_round()

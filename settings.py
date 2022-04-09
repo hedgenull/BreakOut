@@ -26,7 +26,7 @@ class Settings:
 
         # Ball settings
         self.ball_speed = 1
-        self.lives = 10
+        self.lives = 5
 
         # Brick settings
         self.brick_color = (233, 215, 0)  # Yellow bricks

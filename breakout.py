@@ -47,10 +47,6 @@ class BreakOut:
         self.ball = Ball(self)
         self.ball.initialize_position_settings()
 
-        # Initialize group of bricks.
-        self.bricks = Group()
-        self._create_array()
-
         # Make the Play button.
         self.play_button = Button(self, "Play")
 
@@ -60,6 +56,18 @@ class BreakOut:
         # Load brick sounds
         pygame.mixer.init()
         pygame.mixer.music.set_volume(self.settings.volume)
+
+        # Hard mode?
+        self.hard_mode = False
+        self.hard_mode_button = Button(self, "Hard Mode")
+        self.hard_mode_button.rect.midtop = (self.play_button.rect.midbottom[0],
+                                             self.play_button.rect.midbottom[1] +
+                                             40)
+        self.hard_mode_button._prep_msg("Hard Mode")
+
+        # Initialize group of bricks.
+        self.bricks = Group()
+        self._create_array()
 
     def run(self):
         """Run the game."""
@@ -86,6 +94,7 @@ class BreakOut:
         if not self.stats.game_active:
             self.play_button.draw_button()
             self.menu.button.draw_button()
+            self.hard_mode_button.draw_button()
             if self.menu.drawn:
                 self.menu.draw()
 
@@ -133,6 +142,10 @@ class BreakOut:
             self.menu.drawn = True
         elif self.menu.button.rect.collidepoint(mouse_pos) and self.menu.drawn:
             self.menu.drawn = False
+        elif self.hard_mode_button.rect.collidepoint(
+                mouse_pos) and not self.menu.drawn:
+            self.hard_mode = True
+            self._start_game()
 
     def _start_game(self):
         """Start a new game."""
@@ -152,6 +165,22 @@ class BreakOut:
 
         # Hide the mouse cursor.
         pygame.mouse.set_visible(False)
+
+        if self.hard_mode:
+            self._make_hard()
+
+    def _make_hard(self):
+        self.settings.bar_speed = 5
+        self.settings.ball_speed = 1.75
+        self.settings.brick_hp = 2
+        self.settings.brick_points = 30
+        self.settings.brick_hp_scale = 1.5
+        self.settings.speedup_scale = 1.1
+        self.settings.bar_color, self.settings.brick_color = (75, 60,
+                                                              0), (75, 60, 0)
+        self.bricks.empty()
+        self._create_array()
+        self._new_round()
 
     def _ball_lost(self):
         """Respond to when the ball goes off of the screen."""
@@ -227,8 +256,11 @@ class BreakOut:
 
                 # Bounce the ball off the brick.
                 dx, dy = self.ball.direction
-                n1, n2 = random.choice([1, 1, -1]), random.choice([1, -1, -1])
-                self.ball.direction = dx * n1, dy * n2
+                if self.hard_mode:
+                    n1, n2 = random.choice([1, -1]), random.choice([1, -1])
+                    self.ball.direction = dx * n1, dy * n2
+                else:
+                    self.ball.direction = dx, -dy
 
         self.sb.check_high_score()
 

@@ -46,5 +46,6 @@ class Settings:
         """Speed up the ball and bar."""
         self.bar_speed *= self.speedup_scale
         self.ball_speed *= self.speedup_scale
-        self.brick_hitpoints = round(self.brick_hitpoints * self.brick_hp_scale, 2)
+        self.brick_hitpoints = round(
+            self.brick_hitpoints * self.brick_hp_scale, 2)
         self.brick_points = int(round(self.brick_points * 1.5, -1))

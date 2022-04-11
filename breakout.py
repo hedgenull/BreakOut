@@ -167,7 +167,7 @@ class BreakOut:
         self._create_array()
         self._new_round()
 
-        # Hide the mouse cursor.
+        # Hide the mouse cursor.K
         pygame.mouse.set_visible(False)
 
         if self.hard_mode:
@@ -176,13 +176,20 @@ class BreakOut:
     def _make_hard(self):
         """Change the settings to a hard state."""
         self.hard_mode = True
-        self.settings.bar_speed = 5
-        self.settings.ball_speed = 2
+        self.settings.bar_speed = 4
+        self.settings.ball_speed = 1.65
         self.settings.brick_hp = 2
         self.settings.brick_points = 30
         self.settings.brick_hp_scale = 1.75
         self.settings.bar_color, self.settings.brick_color = (130, 50,
                                                               0), (130, 50, 0)
+        # Initialize bar.
+        self.bar = Bar(self)
+
+        # Initialize ball.
+        self.ball = Ball(self)
+        self.ball.initialize_position_settings()
+
         self.bricks.empty()
         self._create_array()
         self._new_round()

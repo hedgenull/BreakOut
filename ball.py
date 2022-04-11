@@ -60,7 +60,8 @@ class Ball(Sprite):
                     self.direction = dx, -dy
                     self.in_bar = True
                 elif (self.rect.right >= self.game.bar.rect.left + self.speed
-                      or self.rect.left <= self.game.bar.rect.right - self.speed):
+                      or
+                      self.rect.left <= self.game.bar.rect.right - self.speed):
                     self.direction = -dx, dy
                     self.in_bar = True
         else:

@@ -44,7 +44,7 @@ class HelpMenu:
             "- Each time the ball goes off of the screen, you lose a life.",
             "- Once you destroy all the bricks, they reappear and the game moves faster.",
             "- If you lose all of your lives, the 'Play' button appears on the center of the screen.",
-            "  Click it or press 'P' or 'Enter' to restart the game.",
+            "Click it or press 'P' or 'Enter' to restart the game.",
             "- Press 'Q', 'Escape', or click the close button at any time to quit the game."
         ]
         self.texts = []

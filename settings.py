@@ -8,6 +8,7 @@
 # AUTHOR:       @hedgenull
 #================================================================================>
 
+import pygame.color
 
 class Settings:
     """Settings class for BreakOut game."""
@@ -30,6 +31,7 @@ class Settings:
 
         # Brick settings
         self.brick_color = (233, 215, 0)  # Yellow bricks
+        self.brick_color_increase = (15, 7, 7)
         self.brick_points = 10
         self.brick_hitpoints = 1
         self.brick_hp_scale = 1.2

@@ -256,6 +256,7 @@ class BreakOut:
                 self.sb.check_high_score()
 
                 brick.hp -= 1
+                brick.update_color()
                 if brick.hp <= 0:
                     pygame.mixer.music.load(self.settings.destroy_sound)
                     brick.kill()

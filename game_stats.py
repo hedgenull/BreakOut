@@ -25,6 +25,7 @@ class GameStats:
         with open("high_score.json", "r") as f:
             data = json.load(f)
             self.high_score = int(data["high_score"])
+            self.high_sc_level = int(data["level"])
 
     def reset_stats(self):
         """Initialize statistics that can change during the game."""
@@ -35,11 +36,10 @@ class GameStats:
         self.level = 1
 
     def save_high_score(self):
-        """Write the high score to the file for later retrieval."""
+        """Write the high score and level to the file for later retrieval."""
         with open("high_score.json", "w") as f:
             data = json.dumps({
                 "high_score": str(self.high_score),
                 "level": str(self.level),
-                "lives_left": str(self.lives_left)
             })
             f.write(data)

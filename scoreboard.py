@@ -50,7 +50,7 @@ class Scoreboard:
     def prep_high_score(self):
         """Turn the high score into a rendered image."""
         high_score = round(self.stats.high_score, -1)
-        high_score_str = "{:,}".format(high_score)
+        high_score_str = "{:,}:{:,}".format(high_score, self.stats.high_sc_level)
         self.high_score_image = self.font.render(high_score_str, True,
                                                  self.text_color,
                                                  self.settings.bg_color)

@@ -197,7 +197,7 @@ class BreakOut:
         self.bricks.empty()
         self._create_array()
         self._new_round()
-    
+
     def _make_normal(self):
         """Make sure we use the normal settings."""
         self.hard_mode = False
@@ -206,7 +206,8 @@ class BreakOut:
         self.settings.brick_hp = 1
         self.settings.brick_points = 10
         self.settings.brick_hp_scale = 1.2
-        self.settings.bar_color, self.settings.brick_color = (233, 215, 0), (233, 215, 0)
+        self.settings.bar_color, self.settings.brick_color = (233, 215,
+                                                              0), (233, 215, 0)
         # Initialize bar.
         self.bar = Bar(self)
 

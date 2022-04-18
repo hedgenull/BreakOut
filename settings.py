@@ -10,6 +10,7 @@
 
 import pygame.color
 
+
 class Settings:
     """Settings class for BreakOut game."""
     def __init__(self):

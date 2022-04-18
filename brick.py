@@ -37,10 +37,11 @@ class Brick(Sprite):
     def update(self):
         """Draw the brick at its current position."""
         pygame.draw.rect(self.screen, self.color, self.rect)
-    
+
     def update_color(self):
         """Update the color of the brick based on its health."""
         r, g, b = self.color
         dr, dg, db = self.settings.brick_color_increase
         for _ in range(1, int(self.hp)):
-            self.color = (r + dr, g + dg, b + db) if r + dr > 255 else (255, 255, 255)
+            self.color = (r + dr, g + dg,
+                          b + db) if r + dr > 255 else (255, 255, 255)

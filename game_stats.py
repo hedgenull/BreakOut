@@ -8,6 +8,8 @@
 # AUTHOR:       @hedgenull
 #================================================================================>
 
+import json
+
 
 class GameStats:
     """Track game stats for Alien Invasion."""
@@ -20,8 +22,9 @@ class GameStats:
         self.reset_stats()
 
         # High score should never be reset.
-        with open("high_score.txt", "r") as f:
-            self.high_score = int(f.read())
+        with open("high_score.json", "r") as f:
+            data = json.load(f)
+            self.high_score = int(data["high_score"])
 
     def reset_stats(self):
         """Initialize statistics that can change during the game."""
@@ -33,5 +36,10 @@ class GameStats:
 
     def save_high_score(self):
         """Write the high score to the file for later retrieval."""
-        with open("high_score.txt", "w") as f:
-            f.write(str(self.high_score))
+        with open("high_score.json", "w") as f:
+            data = json.dumps({
+                "high_score": str(self.high_score),
+                "level": str(self.level),
+                "lives_left": str(self.lives_left)
+            })
+            f.write(data)

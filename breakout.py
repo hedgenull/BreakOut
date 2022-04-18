@@ -172,6 +172,8 @@ class BreakOut:
 
         if self.hard_mode:
             self._make_hard()
+        else:
+            self._make_normal()
 
     def _make_hard(self):
         """Change the settings to a hard state."""
@@ -183,6 +185,26 @@ class BreakOut:
         self.settings.brick_hp_scale = 1.75
         self.settings.bar_color, self.settings.brick_color = (130, 50,
                                                               0), (130, 50, 0)
+        # Initialize bar.
+        self.bar = Bar(self)
+
+        # Initialize ball.
+        self.ball = Ball(self)
+        self.ball.initialize_position_settings()
+
+        self.bricks.empty()
+        self._create_array()
+        self._new_round()
+    
+    def _make_normal(self):
+        """Make sure we use the normal settings."""
+        self.hard_mode = False
+        self.settings.bar_speed = 3
+        self.settings.ball_speed = 1
+        self.settings.brick_hp = 1
+        self.settings.brick_points = 10
+        self.settings.brick_hp_scale = 1.2
+        self.settings.bar_color, self.settings.brick_color = (233, 215, 0), (233, 215, 0)
         # Initialize bar.
         self.bar = Bar(self)
 

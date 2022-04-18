@@ -121,6 +121,7 @@ class BreakOut:
             self.bar.moving_left = True
         elif event.key == pygame.K_p or event.key == pygame.K_RETURN:
             if not self.stats.game_active:
+                self._make_normal()
                 self._start_game()
         elif event.key == pygame.K_h:
             if not self.stats.game_active:
@@ -140,6 +141,7 @@ class BreakOut:
         if self.play_button.rect.collidepoint(
                 mouse_pos
         ) and not self.stats.game_active and not self.menu.drawn:
+            self._make_normal()
             self._start_game()
         if self.menu.button.rect.collidepoint(
                 mouse_pos) and not self.menu.drawn:

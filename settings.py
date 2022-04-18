@@ -40,7 +40,7 @@ class Settings:
         self.menu_color = (255, 0, 0)  # Red menu background
 
         # Sound effects
-        self.volume = 0.75
+        self.volume = 0.6
         self.destroy_sound = "assets/destroy.mp3"
         self.break_sound = "assets/break.mp3"
 

@@ -42,5 +42,5 @@ class Brick(Sprite):
         """Update the color of the brick based on its health."""
         r, g, b = self.color
         dr, dg, db = self.settings.brick_color_increase
-        for i in range(1, int(self.hp)):
+        for _ in range(1, int(self.hp)):
             self.color = r + dr, g + dg, b + db

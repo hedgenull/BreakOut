@@ -43,4 +43,4 @@ class Brick(Sprite):
         r, g, b = self.color
         dr, dg, db = self.settings.brick_color_increase
         for _ in range(1, int(self.hp)):
-            self.color = r + dr, g + dg, b + db
+            self.color = (r + dr, g + dg, b + db) if r + dr > 255 else (255, 255, 255)

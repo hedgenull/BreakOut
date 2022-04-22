@@ -1,4 +1,6 @@
 # BreakOut
 
-Python version of Atari Breakout game.
-_*NOTICE*_: "Minor" bugs have mostly been fixed.
+BreakOut is a Python version of the Atari Breakout game.
+I've finished the color-changing bricks and the bouncing works fine. Also, the hard mode is fully implemented!
+All major bugs are fixed!
+Yay!

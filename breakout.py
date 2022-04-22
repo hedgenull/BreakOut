@@ -186,7 +186,8 @@ class BreakOut:
         self.settings.brick_points = 30
         self.settings.brick_hp_scale = 1.75
         self.settings.bar_color, self.settings.brick_color = (255, 255,
-                                                              255), (255, 255, 255)
+                                                              255), (255, 255,
+                                                                     255)
 
         self.bricks.empty()
         self._create_array()
@@ -200,9 +201,12 @@ class BreakOut:
         self.settings.brick_hp = 1
         self.settings.brick_points = 10
         self.settings.brick_hp_scale = 1.2
-        self.brick_color_decrease = (random.randint(25, 50), random.randint(25, 50), random.randint(25, 50))
+        self.brick_color_decrease = (random.randint(25, 50),
+                                     random.randint(25, 50),
+                                     random.randint(25, 50))
         col = random.randint(200, 255)
-        self.settings.bar_color, self.settings.brick_color = [col] * 3, [col] * 3
+        self.settings.bar_color, self.settings.brick_color = [col] * 3, [col
+                                                                         ] * 3
         self.bricks.empty()
         self._create_array()
         self._new_round()

@@ -32,13 +32,13 @@ class Settings:
 
         # Brick settings
         self.brick_color = (233, 215, 0)  # Yellow bricks
-        self.brick_color_increase = (15, 7, 7)
+        self.brick_color_increase = (30, 14, 14)
         self.brick_points = 10
         self.brick_hitpoints = 1
         self.brick_hp_scale = 1.2
 
         # Help-menu settings
-        self.menu_color = (255, 0, 0)  # Red menu background
+        self.menu_color = (40, 40, 40)  # Gray menu background
 
         # Sound effects
         self.volume = 0.6

@@ -303,8 +303,7 @@ class BreakOut:
         self.sb.check_high_score()
 
         if len(self.bricks) <= 0:
-            # Destroy existing bricks and create a new array of bricks.
-            self.bricks.empty()
+            # Create a new array of bricks.
             self._create_array()
             self.stats.lives_left += 1
             self.settings.speedup()

@@ -30,7 +30,7 @@ class Brick(Sprite):
 
         # Scoring and hitpoints
         self.point_value = self.settings.brick_points
-        self.hp = self.settings.brick_hitpoints
+        self.hp = self.settings.brick_hp
 
         self.update_color()
 
@@ -41,7 +41,6 @@ class Brick(Sprite):
     def update_color(self):
         """Update the color of the brick based on its health."""
         r, g, b = self.color
-        dr, dg, db = self.settings.brick_color_increase
+        dr, dg, db = self.settings.brick_color_decrease
         for _ in range(1, int(self.hp)):
-            self.color = (r + dr, g + dg,
-                          b + db) if r + dr > 255 else (255, 255, 255)
+            self.color = (r - dr, g - dg, b - db) if r - dr > 0 else (0, 0, 0)

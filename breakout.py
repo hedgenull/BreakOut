@@ -66,7 +66,7 @@ class BreakOut:
         self.hard_mode_button._prep_msg("Hard Mode")
 
         # Initialize group of bricks.
-        self.bricks = Group()
+        self.bricks: Group[Brick] = Group()
         self._create_array()
 
     def run(self):
@@ -206,8 +206,9 @@ class BreakOut:
         self.settings.brick_hp = 1
         self.settings.brick_points = 10
         self.settings.brick_hp_scale = 1.2
-        self.settings.bar_color, self.settings.brick_color = (233, 215,
-                                                              0), (233, 215, 0)
+        self.settings.bar_color, self.settings.brick_color = (255, 255,
+                                                              255), (255, 255,
+                                                                     255)
         # Initialize bar.
         self.bar = Bar(self)
 
@@ -236,6 +237,8 @@ class BreakOut:
         # Center the bar
         self.bar.center_rect()
 
+        self.bar.color = self.bricks.sprites()[0].color
+
         # Reset ball's position and speed, and update balls left on the scoreboard
         self.ball.initialize_position_settings()
         self.sb.prep_ball_group()
@@ -247,6 +250,9 @@ class BreakOut:
         """Create the array of bricks."""
         # Create a brick and find the number of bricks in a row.
         # Spacing between each brick is equal to one brick width.
+        self.settings.brick_color_decrease = (random.choice([25, 50]),
+                                              random.choice([25, 50]),
+                                              random.choice([25, 50]))
         brick = Brick(self)
         brick_width, brick_height = brick.rect.size
         available_space_x = self.settings.screen_width - brick_width

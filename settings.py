@@ -8,7 +8,7 @@
 # AUTHOR:       @hedgenull
 #================================================================================>
 
-import pygame.color
+from random import choice
 
 
 class Settings:
@@ -24,17 +24,20 @@ class Settings:
 
         # Bar settings
         self.bar_speed = 3
-        self.bar_color = (233, 215, 0)  # Yellow bar
+        col = choice([200, 255])
+        self.bar_color = (col, col, col)
 
         # Ball settings
         self.ball_speed = 1
         self.lives = 5
 
         # Brick settings
-        self.brick_color = (233, 215, 0)  # Yellow bricks
-        self.brick_color_increase = (30, 14, 14)
+        self.brick_color = self.bar_color
+        self.brick_color_decrease = (choice([25, 50]),
+                                     choice([25, 50]),
+                                     choice([25, 50]))
         self.brick_points = 10
-        self.brick_hitpoints = 1
+        self.brick_hp = 3
         self.brick_hp_scale = 1.2
 
         # Help-menu settings
@@ -49,6 +52,5 @@ class Settings:
         """Speed up the ball and bar."""
         self.bar_speed *= self.speedup_scale
         self.ball_speed *= self.speedup_scale
-        self.brick_hitpoints = round(
-            self.brick_hitpoints * self.brick_hp_scale, 2)
+        self.brick_hp = round(self.brick_hp * self.brick_hp_scale, 2)
         self.brick_points = int(round(self.brick_points * 1.5, -1))

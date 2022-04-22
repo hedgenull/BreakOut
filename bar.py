@@ -32,6 +32,8 @@ class Bar(Sprite):
         self.moving_right = False
         self.speed = self.settings.bar_speed
 
+        self.color = self.settings.bar_color
+
         # Center the rect.
         self.center_rect()
 
@@ -44,7 +46,7 @@ class Bar(Sprite):
 
     def blitme(self):
         """Draw the bar at its current position."""
-        pygame.draw.rect(self.screen, self.settings.bar_color, self.rect)
+        pygame.draw.rect(self.screen, self.color, self.rect)
 
     def center_rect(self):
         """Center the bar on the bottom of the screen."""

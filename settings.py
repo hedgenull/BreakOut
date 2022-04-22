@@ -24,7 +24,7 @@ class Settings:
 
         # Bar settings
         self.bar_speed = 3
-        col = rnd(200, 255)
+        col = rnd(190, 255)
         self.bar_color = (col, col, col)
 
         # Ball settings
@@ -33,7 +33,7 @@ class Settings:
 
         # Brick settings
         self.brick_color = self.bar_color
-        self.brick_color_decrease = (rnd(25, 50), rnd(25, 50), rnd(25, 50))
+        self.brick_color_decrease = (rnd(30, 70), rnd(30, 70), rnd(30, 70))
         self.brick_points = 10
         self.brick_hp = 3
         self.brick_hp_scale = 1.2

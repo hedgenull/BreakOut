@@ -162,20 +162,15 @@ class BreakOut:
         self.sb.prep_level()
         self.sb.prep_ball_group()
 
-        # Get rid of any remaining bricks.
-        self.bricks.empty()
-
-        # Create a new array of bricks and center the bar/ball.
-        self._create_array()
-        self._new_round()
-
-        # Hide the mouse cursor.K
+        # Hide the mouse cursor.
         pygame.mouse.set_visible(False)
 
         if self.hard_mode:
             self._make_hard()
         else:
             self._make_normal()
+
+        self._new_round(True)
 
     def _make_hard(self):
         """Change the settings to a hard state."""
@@ -189,10 +184,6 @@ class BreakOut:
                                                               255), (255, 255,
                                                                      255)
 
-        self.bricks.empty()
-        self._create_array()
-        self._new_round()
-
     def _make_normal(self):
         """Make sure we use the normal settings."""
         self.hard_mode = False
@@ -200,16 +191,13 @@ class BreakOut:
         self.settings.ball_speed = 1
         self.settings.brick_hp = 1
         self.settings.brick_points = 10
-        self.settings.brick_hp_scale = 1.2
-        self.brick_color_decrease = (random.randint(30, 70),
-                                     random.randint(30, 70),
-                                     random.randint(30, 70))
-        col = random.randint(190, 255)
-        self.settings.bar_color, self.settings.brick_color = [col] * 3, [col
-                                                                         ] * 3
+        self.settings.brick_hp_scale = 1.4
+
+        # Change the colors of the bricks/bar.
+        self._change_colors()
+
         self.bricks.empty()
         self._create_array()
-        self._new_round()
 
     def _ball_lost(self):
         """Respond to when the ball goes off of the screen."""
@@ -223,27 +211,26 @@ class BreakOut:
             self.stats.game_active = False
             pygame.mouse.set_visible(True)
 
-    def _new_round(self, secs=0):
+    def _new_round(self, start=False):
         """Center the elements on the screen and initialize some settings."""
-        # Center the bar
+        # Center the bar.
         self.bar.center_rect()
-
-        self.bar.color = self.bricks.sprites()[0].color
 
         # Reset ball's position and speed, and update balls left on the scoreboard
         self.ball.initialize_position_settings()
         self.sb.prep_ball_group()
 
-        # Pause
-        time.sleep(secs)
+        if not start:
+            # Change the colors of the bricks/bar.
+            self._change_colors()
+            # Pause.
+            time.sleep(3)
 
     def _create_array(self):
         """Create the array of bricks."""
         # Create a brick and find the number of bricks in a row.
         # Spacing between each brick is equal to one brick width.
-        self.settings.brick_color_decrease = (random.choice([25, 50]),
-                                              random.choice([25, 50]),
-                                              random.choice([25, 50]))
+        self._change_colors()
         brick = Brick(self)
         brick_width, brick_height = brick.rect.size
         available_space_x = self.settings.screen_width - brick_width
@@ -259,6 +246,16 @@ class BreakOut:
         for row_number in range(int(number_rows)):
             for brick_number in range(number_bricks_x):
                 self._create_brick(brick_number, row_number)
+
+    def _change_colors(self):
+        """Change the colors of the bar and bricks."""
+        self.settings.brick_color_decrease = (random.choice([25, 50]),
+                                              random.choice([25, 50]),
+                                              random.choice([25, 50]))
+        col = random.randint(190, 255)
+        self.settings.bar_color, self.settings.brick_color = (col, col,
+                                                              col), (col, col,
+                                                                     col)
 
     def _create_brick(self, brick_number, row_number):
         """Create an brick and place it in the row."""
@@ -307,7 +304,7 @@ class BreakOut:
             # Increment level
             self.stats.level += 1
             self.sb.prep_level()
-            self._new_round(3)
+            self._new_round()
 
     def _quit_game(self):
         """Quit the game and save the high score."""

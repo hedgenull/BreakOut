@@ -8,10 +8,18 @@
 # AUTHOR:       @hedgenull
 #================================================================================>
 
+########################################
+# Dependencies
+########################################
+
 import pygame
 import pygame.font
 from pygame.sprite import Group
 from button import Button
+
+########################################
+# Help menu class
+########################################
 
 
 class HelpMenu:
@@ -29,10 +37,11 @@ class HelpMenu:
                                 self.screen_rect.height)
         self.rect.center = self.screen_rect.center
 
-        # Font settings for controls/instructions.
+        # Font settings for text/instructions.
         self.text_color = (233, 215, 0)  # Yellow text
         self.font = pygame.font.SysFont(None, 40)
 
+        # For multiline text, Pygame needs a list of lines.
         self.instructions_text = [
             "BreakOut: A Python clone of Atari Breakout!",
             "BreakOut is a game where you control a yellow bar on the screen.",
@@ -47,36 +56,40 @@ class HelpMenu:
             "Click it or press 'P' or 'Enter' to restart the game.",
             "- Press 'Q', 'Escape', or click the close button at any time to quit the game."
         ]
-        self.texts = []
+        # List to store rendered images of the text.
+        self.text_images = []
 
         # Prepare button and put it in the corner of the screen
         self.button = Button(self.game, "Help")
-        # Reposition button and re-prep the text so that it appears in the corner
         self.button.rect.bottom = self.screen_rect.bottom - 10
         self.button.rect.right = self.screen_rect.right - 10
         self.button._prep_msg("Help")
 
-        # Prepare the instruction text
-        self.prep_text()
+        # Prepare the instruction text and drawn flag.
+        self._prep_text()
         self.drawn = False
 
     def draw(self):
         """Draw the help menu onto the screen."""
+        # Draw the background.
         pygame.draw.rect(self.screen, self.bg_color, self.rect)
-        for image, rect in self.texts:
+
+        # Draw the text.
+        for image, rect in self.text_images:
             self.screen.blit(image, rect)
         self.button.draw_button()
         self.drawn = True
 
-    def prep_text(self):
+    def _prep_text(self):
         """Turn the instruction text into a rendered image."""
         line_x = 20
         line_y = 20
+        # Run through the lines in the instructions and
         for row_num, line in enumerate(self.instructions_text):
             text_image = self.font.render(line.strip(), True, self.text_color,
                                           self.bg_color)
-
+            # Position the image.
             text_rect = text_image.get_rect()
             text_rect.left = line_x
             text_rect.top = line_y + (40 * row_num)
-            self.texts.append((text_image, text_rect))
+            self.text_images.append((text_image, text_rect))

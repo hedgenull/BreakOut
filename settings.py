@@ -47,7 +47,7 @@ class Settings:
         self.break_sound = "assets/break.mp3"
 
     def speedup(self):
-        """Speed up the ball and bar."""
+        """Speed up the ball and bar and increase brick stats."""
         self.bar_speed *= self.speedup_scale
         self.ball_speed *= self.speedup_scale
         self.brick_hp = round(self.brick_hp * self.brick_hp_scale, 2)

@@ -8,8 +8,16 @@
 # AUTHOR:       @hedgenull
 #================================================================================>
 
+########################################
+# Dependencies
+########################################
+
 import pygame
 from pygame.sprite import Sprite
+
+########################################
+# Bar class
+########################################
 
 
 class Bar(Sprite):
@@ -32,6 +40,7 @@ class Bar(Sprite):
         self.moving_right = False
         self.speed = self.settings.bar_speed
 
+        # Color
         self.color = self.settings.bar_color
 
         # Center the rect.
@@ -40,8 +49,10 @@ class Bar(Sprite):
     def update(self):
         """Update the bar based on the movement flags."""
         if self.moving_left and self.rect.left > self.screen_rect.left:
+            # We are moving left and aren't hitting the wall.
             self.rect.x -= self.speed
         if self.moving_right and self.rect.right < self.screen_rect.right:
+            # We are moving right and aren't hitting the wall.
             self.rect.x += self.speed
 
     def blitme(self):

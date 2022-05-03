@@ -40,6 +40,6 @@ class GameStats:
         with open("high_score.json", "w") as f:
             data = json.dumps({
                 "high_score": str(self.high_score),
-                "level": str(self.level),
+                "level": str(self.high_sc_level),
             })
             f.write(data)

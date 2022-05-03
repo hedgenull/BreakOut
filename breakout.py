@@ -66,7 +66,7 @@ class BreakOut:
         self.hard_mode_button._prep_msg("Hard Mode")
 
         # Initialize group of bricks.
-        self.bricks: Group[Brick] = Group()
+        self.bricks = Group()
         self._create_array()
 
     def run(self):
@@ -150,7 +150,7 @@ class BreakOut:
             self.menu.drawn = False
         elif self.hard_mode_button.rect.collidepoint(
                 mouse_pos) and not self.menu.drawn:
-            self.hard_mode = True
+            self._make_hard()
             self._start_game()
 
     def _start_game(self):
@@ -165,12 +165,12 @@ class BreakOut:
         # Hide the mouse cursor.
         pygame.mouse.set_visible(False)
 
-        if self.hard_mode:
-            self._make_hard()
-        else:
-            self._make_normal()
+        # Create a new array of bricks.
+        self.bricks.empty()
+        self._create_array()
 
-        self._new_round(True)
+        # Reset positions.
+        self._new_round()
 
     def _make_hard(self):
         """Change the settings to a hard state."""
@@ -180,9 +180,6 @@ class BreakOut:
         self.settings.brick_hp = 2
         self.settings.brick_points = 30
         self.settings.brick_hp_scale = 1.75
-        self.settings.bar_color, self.settings.brick_color = (255, 255,
-                                                              255), (255, 255,
-                                                                     255)
 
     def _make_normal(self):
         """Make sure we use the normal settings."""
@@ -193,12 +190,6 @@ class BreakOut:
         self.settings.brick_points = 10
         self.settings.brick_hp_scale = 1.4
 
-        # Change the colors of the bricks/bar.
-        self._change_colors()
-
-        self.bricks.empty()
-        self._create_array()
-
     def _ball_lost(self):
         """Respond to when the ball goes off of the screen."""
         if self.stats.lives_left > 0:
@@ -206,13 +197,17 @@ class BreakOut:
             self.stats.lives_left -= 1
 
             # Start a new round
-            self._new_round(3)
+            time.sleep(3)
+            self._new_round()
         else:
             self.stats.game_active = False
             pygame.mouse.set_visible(True)
 
-    def _new_round(self, start=False):
+    def _new_round(self):
         """Center the elements on the screen and initialize some settings."""
+        # Change the colors.
+        self._change_colors()
+
         # Center the bar.
         self.bar.center_rect()
 
@@ -220,17 +215,19 @@ class BreakOut:
         self.ball.initialize_position_settings()
         self.sb.prep_ball_group()
 
-        if not start:
-            # Change the colors of the bricks/bar.
-            self._change_colors()
-            # Pause.
-            time.sleep(3)
+    def _change_colors(self):
+        """Change the colors of the bar and bricks."""
+        self.settings.brick_color_decrease = (random.choice([25, 50]),
+                                              random.choice([25, 50]),
+                                              random.choice([25, 50]))
+
+        self.settings.bar_color = self.settings.brick_color = (random.choice(
+            [155, 255]), random.choice([155, 255]), random.choice([155, 255]))
 
     def _create_array(self):
         """Create the array of bricks."""
         # Create a brick and find the number of bricks in a row.
         # Spacing between each brick is equal to one brick width.
-        self._change_colors()
         brick = Brick(self)
         brick_width, brick_height = brick.rect.size
         available_space_x = self.settings.screen_width - brick_width
@@ -247,16 +244,6 @@ class BreakOut:
             for brick_number in range(number_bricks_x):
                 self._create_brick(brick_number, row_number)
 
-    def _change_colors(self):
-        """Change the colors of the bar and bricks."""
-        self.settings.brick_color_decrease = (random.choice([25, 50]),
-                                              random.choice([25, 50]),
-                                              random.choice([25, 50]))
-        col = random.randint(190, 255)
-        self.settings.bar_color, self.settings.brick_color = (col, col,
-                                                              col), (col, col,
-                                                                     col)
-
     def _create_brick(self, brick_number, row_number):
         """Create an brick and place it in the row."""
         brick = Brick(self)
@@ -272,8 +259,6 @@ class BreakOut:
 
         for brick in self.bricks:
             if self.ball.rect.colliderect(brick.rect):
-                self.sb.check_high_score()
-
                 brick.hp -= 1
                 brick.update_color()
                 if brick.hp <= 0:
@@ -284,7 +269,7 @@ class BreakOut:
                 else:
                     pygame.mixer.music.load(self.settings.break_sound)
 
-                pygame.mixer.music.play(fade_ms=100)
+                pygame.mixer.music.play()
 
                 # Bounce the ball off the brick.
                 dx, dy = self.ball.direction
@@ -297,19 +282,20 @@ class BreakOut:
         self.sb.check_high_score()
 
         if len(self.bricks) <= 0:
-            # Create a new array of bricks.
-            self._create_array()
             self.stats.lives_left += 1
             self.settings.speedup()
             # Increment level
             self.stats.level += 1
             self.sb.prep_level()
             self._new_round()
+            # Create a new array of bricks.
+            self._create_array()
+            time.sleep(3)
 
     def _quit_game(self):
         """Quit the game and save the high score."""
         # Save high score
-        self.stats.save_high_score()
+        self.sb.check_high_score()
 
         # Quit the program
         pygame.quit()

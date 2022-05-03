@@ -8,6 +8,10 @@
 # AUTHOR:       @hedgenull
 #================================================================================>
 
+########################################
+# Dependencies
+########################################
+
 import pygame, sys, time, random
 
 from settings import Settings
@@ -21,6 +25,10 @@ from help_menu import HelpMenu
 
 from pygame.sprite import Group
 import pygame.mixer
+
+########################################
+# Main game class
+########################################
 
 
 class BreakOut:
@@ -53,13 +61,14 @@ class BreakOut:
         # Make the help menu.
         self.menu = HelpMenu(self)
 
-        # Load brick sounds
+        # Prepare sound elements.
         pygame.mixer.init()
         pygame.mixer.music.set_volume(self.settings.volume)
 
-        # Hard mode?
+        # Hard mode settings.
         self.hard_mode = False
         self.hard_mode_button = Button(self, "Hard Mode")
+        # Set button position.
         self.hard_mode_button.rect.midtop = (
             self.play_button.rect.midbottom[0],
             self.play_button.rect.midbottom[1] + 40)
@@ -90,11 +99,13 @@ class BreakOut:
         self.ball.blitme()
         self.bricks.update()
 
-        # Draw the play button if the game is inactive.
+        # Draw the buttons if the game is inactive.
         if not self.stats.game_active:
             self.play_button.draw_button()
             self.menu.button.draw_button()
             self.hard_mode_button.draw_button()
+
+            # If the menu is currently showing, draw it.
             if self.menu.drawn:
                 self.menu.draw()
 
@@ -104,33 +115,46 @@ class BreakOut:
         """Respond to keypresses and mouse events."""
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                # Quit the game.
                 self._quit_game()
             elif event.type == pygame.KEYDOWN:
+                # Pass the event to the keydown callback.
                 self._check_keydown_events(event)
             elif event.type == pygame.KEYUP:
+                # Pass the event to the keyup callback.
                 self._check_keyup_events(event)
             elif event.type == pygame.MOUSEBUTTONDOWN:
+                # Pass the event to the mouse click callback.
                 mouse_pos = pygame.mouse.get_pos()
                 self._check_buttons(mouse_pos)
+
+        # Check collisions between the bricks and the ball.
         self._check_ball_brick_hit()
 
     def _check_keydown_events(self, event):
+        """Respond to keypresses."""
         if event.key == pygame.K_RIGHT:
+            # Make the bar move right.
             self.bar.moving_right = True
         elif event.key == pygame.K_LEFT:
+            # Make the bar move left.
             self.bar.moving_left = True
         elif event.key == pygame.K_p or event.key == pygame.K_RETURN:
+            # Activate the normal mode if the game isn't active.
             if not self.stats.game_active:
                 self._make_normal()
                 self._start_game()
         elif event.key == pygame.K_h:
+            # Activate the hard mode  if the game isn't active.'
             if not self.stats.game_active:
                 self._make_hard()
                 self._start_game()
         elif event.key == pygame.K_q or event.key == pygame.K_ESCAPE:
+            # Quit the game.
             self._quit_game()
 
     def _check_keyup_events(self, event):
+        """Respond to key releases."""
         if event.key == pygame.K_RIGHT:
             self.bar.moving_right = False
         elif event.key == pygame.K_LEFT:
@@ -141,15 +165,19 @@ class BreakOut:
         if self.play_button.rect.collidepoint(
                 mouse_pos
         ) and not self.stats.game_active and not self.menu.drawn:
+            # The player clicked the play button.
             self._make_normal()
             self._start_game()
         if self.menu.button.rect.collidepoint(
                 mouse_pos) and not self.menu.drawn:
+            # The player clicked the help button- prepare to draw the menu.
             self.menu.drawn = True
         elif self.menu.button.rect.collidepoint(mouse_pos) and self.menu.drawn:
+            # The player clicked the help button while the menu is open- close it.
             self.menu.drawn = False
         elif self.hard_mode_button.rect.collidepoint(
                 mouse_pos) and not self.menu.drawn:
+            # The player clicked the hard mode button.
             self._make_hard()
             self._start_game()
 
@@ -172,6 +200,27 @@ class BreakOut:
         # Reset positions.
         self._new_round()
 
+    def _new_round(self):
+        """Center the elements on the screen and initialize some settings."""
+        # Change the colors.
+        self._change_colors()
+
+        # Center the bar.
+        self.bar.center_rect()
+
+        # Reset ball's position and speed, and update lives left on the scoreboard.
+        self.ball.initialize_position_settings()
+        self.sb.prep_ball_group()
+
+    def _change_colors(self):
+        """Change the colors of the bar and bricks."""
+        self.settings.brick_color_decrease = (random.choice([25, 50]),
+                                              random.choice([25, 50]),
+                                              random.choice([25, 50]))
+
+        self.settings.bar_color = self.settings.brick_color = (random.choice(
+            [155, 255]), random.choice([155, 255]), random.choice([155, 255]))
+
     def _make_hard(self):
         """Change the settings to a hard state."""
         self.hard_mode = True
@@ -193,36 +242,17 @@ class BreakOut:
     def _ball_lost(self):
         """Respond to when the ball goes off of the screen."""
         if self.stats.lives_left > 0:
-            # Decrement lives left
+            # If we still have lives left...
+            # Decrement lives.
             self.stats.lives_left -= 1
 
-            # Start a new round
+            # Pause and start a new round.
             time.sleep(3)
             self._new_round()
         else:
+            # We're out of lives- stop the game.
             self.stats.game_active = False
             pygame.mouse.set_visible(True)
-
-    def _new_round(self):
-        """Center the elements on the screen and initialize some settings."""
-        # Change the colors.
-        self._change_colors()
-
-        # Center the bar.
-        self.bar.center_rect()
-
-        # Reset ball's position and speed, and update balls left on the scoreboard
-        self.ball.initialize_position_settings()
-        self.sb.prep_ball_group()
-
-    def _change_colors(self):
-        """Change the colors of the bar and bricks."""
-        self.settings.brick_color_decrease = (random.choice([25, 50]),
-                                              random.choice([25, 50]),
-                                              random.choice([25, 50]))
-
-        self.settings.bar_color = self.settings.brick_color = (random.choice(
-            [155, 255]), random.choice([155, 255]), random.choice([155, 255]))
 
     def _create_array(self):
         """Create the array of bricks."""
@@ -247,57 +277,87 @@ class BreakOut:
     def _create_brick(self, brick_number, row_number):
         """Create an brick and place it in the row."""
         brick = Brick(self)
+        # Get the brick's size.
         brick_width, brick_height = brick.rect.size
         brick.x = brick_width + 2 * brick_width * brick_number
         brick.rect.x = brick.x
+        # Position the brick in the row and add it to the group.
         brick.rect.y = (brick_height + 2 * brick.rect.height * row_number) + 35
         self.bricks.add(brick)
 
     def _check_ball_brick_hit(self):
         """Check for collisions between the ball and any bricks."""
-        # Respond to the ball hitting a brick
-
+        # Respond to the ball hitting a brick.
         for brick in self.bricks:
             if self.ball.rect.colliderect(brick.rect):
+                # If the brick is hit...
+                # Decrement its hitpoints
                 brick.hp -= 1
+
+                # Update its color
                 brick.update_color()
+
                 if brick.hp <= 0:
+                    # If the brick is dead...
+                    # Load the brick die sound.
                     pygame.mixer.music.load(self.settings.destroy_sound)
+
+                    # Utterly maul, kill, ravage, maim, destroy, annihilate, disintegrate, etc., etc., the brick.
                     brick.kill()
+
+                    # Increase score.
                     self.stats.score += self.settings.brick_points
                     self.sb.prep_score()
                 else:
+                    # Otherwise, it's still alive.
+                    # Load the brick semi-destroy sound.
                     pygame.mixer.music.load(self.settings.break_sound)
 
+                # Realize that we haven't actually played sound yet- just loaded it.
+                # Play whatver sound we loaded.
                 pygame.mixer.music.play()
 
                 # Bounce the ball off the brick.
                 dx, dy = self.ball.direction
                 if self.hard_mode:
+                    # If it's hard mode, bounce it off in a random direction.
                     n1, n2 = random.choice([1, -1]), random.choice([1, -1])
                     self.ball.direction = dx * n1, dy * n2
                 else:
+                    # Bounce the ball off at a nice, simple right angle.
                     self.ball.direction = dx, -dy
 
+        # Check to see if the the high score has been beat.
         self.sb.check_high_score()
 
+        # If the bricks are gone...
+        self._check_bricks_gone()
+
+    def _check_bricks_gone(self):
+        """Check if the bricks are gone. If so, start a new round."""
         if len(self.bricks) <= 0:
+            # If there are no more bricks...
+            # We get another life!
             self.stats.lives_left += 1
+
+            # Sadly, so do the bricks. (Starting at about level 3, that is.)
             self.settings.speedup()
-            # Increment level
+
+            # Increment the level and start a new round.
             self.stats.level += 1
             self.sb.prep_level()
             self._new_round()
-            # Create a new array of bricks.
+
+            # Create a new array of bricks, and pause.
             self._create_array()
             time.sleep(3)
 
     def _quit_game(self):
-        """Quit the game and save the high score."""
-        # Save high score
+        """Quit the game and check the high score."""
+        # Check the high score.
         self.sb.check_high_score()
 
-        # Quit the program
+        # Quit the program.
         pygame.quit()
         sys.exit()
 

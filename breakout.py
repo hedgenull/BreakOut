@@ -202,9 +202,6 @@ class BreakOut:
 
     def _new_round(self):
         """Center the elements on the screen and initialize some settings."""
-        # Change the colors.
-        self._change_colors()
-
         # Center the bar.
         self.bar.center_rect()
 
@@ -214,12 +211,13 @@ class BreakOut:
 
     def _change_colors(self):
         """Change the colors of the bar and bricks."""
-        self.settings.brick_color_decrease = (random.choice([25, 50]),
-                                              random.choice([25, 50]),
-                                              random.choice([25, 50]))
+        self.settings.brick_color_decrease = (random.randint(40, 55),
+                                              random.randint(40, 55),
+                                              random.randint(40, 55))
 
-        self.settings.bar_color = self.settings.brick_color = (random.choice(
-            [155, 255]), random.choice([155, 255]), random.choice([155, 255]))
+        self.bar.color = self.settings.brick_color = (random.randint(155, 255),
+                                                      random.randint(155, 255),
+                                                      random.randint(155, 255))
 
     def _make_hard(self):
         """Change the settings to a hard state."""
@@ -340,17 +338,21 @@ class BreakOut:
             # We get another life!
             self.stats.lives_left += 1
 
-            # Sadly, so do the bricks. (Starting at about level 3, that is.)
+            # Sadly, so do the bricks.
             self.settings.speedup()
+
+            # Create a new array of bricks, and pause.
+            self._create_array()
+            time.sleep(3)
+
+            # Change colors.
+            self._change_colors()
+            self.bar.color = self.bricks.sprites()[0].color
 
             # Increment the level and start a new round.
             self.stats.level += 1
             self.sb.prep_level()
             self._new_round()
-
-            # Create a new array of bricks, and pause.
-            self._create_array()
-            time.sleep(3)
 
     def _quit_game(self):
         """Quit the game and check the high score."""

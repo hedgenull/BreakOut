@@ -33,7 +33,7 @@ class Settings:
 
         # Brick settings
         self.brick_color = self.bar_color
-        self.brick_color_decrease = (rnd(25, 50), rnd(25, 50), rnd(25, 50))
+        self.brick_color_decrease = (rnd(40, 50), rnd(40, 50), rnd(40, 50))
         self.brick_points = 10
         self.brick_hp = 1
         self.brick_hp_scale = 1.2

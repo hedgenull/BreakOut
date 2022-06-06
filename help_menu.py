@@ -1,4 +1,4 @@
-#================================================================================>
+# ================================================================================>
 # FILE NAME:  help_menu.py
 #
 # PURPOSE:
@@ -6,7 +6,7 @@
 #
 # CREATED DATE: 2022-03-30
 # AUTHOR:       @hedgenull
-#================================================================================>
+# ================================================================================>
 
 ########################################
 # Dependencies
@@ -15,6 +15,7 @@
 import pygame
 import pygame.font
 from pygame.sprite import Group
+
 from button import Button
 
 ########################################
@@ -24,6 +25,7 @@ from button import Button
 
 class HelpMenu:
     """A class to show the game controls."""
+
     def __init__(self, game):
         """Initialize attributes."""
         pygame.font.init()
@@ -33,8 +35,7 @@ class HelpMenu:
 
         # Menu settings
         self.bg_color = self.game.settings.menu_color
-        self.rect = pygame.Rect(0, 0, self.screen_rect.width,
-                                self.screen_rect.height)
+        self.rect = pygame.Rect(0, 0, self.screen_rect.width, self.screen_rect.height)
         self.rect.center = self.screen_rect.center
 
         # Font settings for text/instructions.
@@ -54,7 +55,7 @@ class HelpMenu:
             "- Once you destroy all the bricks, they reappear and the game moves faster.",
             "- If you lose all of your lives, the 'Play' button appears on the center of the screen.",
             "Click it or press 'P' or 'Enter' to restart the game.",
-            "- Press 'Q', 'Escape', or click the close button at any time to quit the game."
+            "- Press 'Q', 'Escape', or click the close button at any time to quit the game.",
         ]
         # List to store rendered images of the text.
         self.text_images = []
@@ -86,8 +87,7 @@ class HelpMenu:
         line_y = 20
         # Run through the lines in the instructions and
         for row_num, line in enumerate(self.instructions_text):
-            text_image = self.font.render(line.strip(), True, self.text_color,
-                                          self.bg_color)
+            text_image = self.font.render(line.strip(), True, self.text_color, self.bg_color)
             # Position the image.
             text_rect = text_image.get_rect()
             text_rect.left = line_x

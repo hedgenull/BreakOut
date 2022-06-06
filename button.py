@@ -1,4 +1,4 @@
-#================================================================================>
+# ================================================================================>
 # FILE NAME:  button.py
 #
 # PURPOSE:
@@ -6,7 +6,7 @@
 #
 # CREATED DATE: 2022-03-26
 # AUTHOR:       @hedgenull
-#================================================================================>
+# ================================================================================>
 
 ########################################
 # Dependencies
@@ -21,6 +21,7 @@ import pygame.font
 
 class Button:
     """A button class for the BreakOut game."""
+
     def __init__(self, game, msg):
         """Initialize button attributes."""
         self.screen = game.screen
@@ -41,8 +42,7 @@ class Button:
 
     def _prep_msg(self, msg):
         """Turn msg into a rendered image and center the text on the button."""
-        self.msg_image = self.font.render(msg, True, self.text_color,
-                                          self.button_color)
+        self.msg_image = self.font.render(msg, True, self.text_color, self.button_color)
         self.msg_image_rect = self.msg_image.get_rect()
         self.msg_image_rect.center = self.rect.center
 

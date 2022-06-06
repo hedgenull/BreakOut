@@ -1,4 +1,4 @@
-#================================================================================>
+# ================================================================================>
 # FILE NAME:  breakout.py
 #
 # PURPOSE:
@@ -6,25 +6,28 @@
 #
 # CREATED DATE: 2022-03-18
 # AUTHOR:       @hedgenull
-#================================================================================>
+# ================================================================================>
 
 ########################################
 # Dependencies
 ########################################
 
-import pygame, sys, time, random
+import random
+import sys
+import time
 
-from settings import Settings
-from bar import Bar
-from ball import Ball
-from brick import Brick
-from game_stats import GameStats
-from scoreboard import Scoreboard
-from button import Button
-from help_menu import HelpMenu
-
-from pygame.sprite import Group
+import pygame
 import pygame.mixer
+from pygame.sprite import Group
+
+from ball import Ball
+from bar import Bar
+from brick import Brick
+from button import Button
+from game_stats import GameStats
+from help_menu import HelpMenu
+from scoreboard import Scoreboard
+from settings import Settings
 
 ########################################
 # Main game class
@@ -33,6 +36,7 @@ import pygame.mixer
 
 class BreakOut:
     """Base class for BreakOut game."""
+
     def __init__(self):
         """Initialize BreakOut assets and objects."""
         # Initialize settings.
@@ -40,7 +44,8 @@ class BreakOut:
 
         # Initialize screen.
         self.screen = pygame.display.set_mode(
-            (self.settings.screen_width, self.settings.screen_height))
+            (self.settings.screen_width, self.settings.screen_height)
+        )
         pygame.display.set_caption("BreakOut")
         self.screen_rect = self.screen.get_rect()
 
@@ -71,7 +76,8 @@ class BreakOut:
         # Set button position.
         self.hard_mode_button.rect.midtop = (
             self.play_button.rect.midbottom[0],
-            self.play_button.rect.midbottom[1] + 40)
+            self.play_button.rect.midbottom[1] + 40,
+        )
         self.hard_mode_button._prep_msg("Hard Mode")
 
         # Initialize group of bricks.
@@ -162,21 +168,21 @@ class BreakOut:
 
     def _check_buttons(self, mouse_pos):
         """Respond when the player clicks the play button."""
-        if self.play_button.rect.collidepoint(
-                mouse_pos
-        ) and not self.stats.game_active and not self.menu.drawn:
+        if (
+            self.play_button.rect.collidepoint(mouse_pos)
+            and not self.stats.game_active
+            and not self.menu.drawn
+        ):
             # The player clicked the play button.
             self._make_normal()
             self._start_game()
-        if self.menu.button.rect.collidepoint(
-                mouse_pos) and not self.menu.drawn:
+        if self.menu.button.rect.collidepoint(mouse_pos) and not self.menu.drawn:
             # The player clicked the help button- prepare to draw the menu.
             self.menu.drawn = True
         elif self.menu.button.rect.collidepoint(mouse_pos) and self.menu.drawn:
             # The player clicked the help button while the menu is open- close it.
             self.menu.drawn = False
-        elif self.hard_mode_button.rect.collidepoint(
-                mouse_pos) and not self.menu.drawn:
+        elif self.hard_mode_button.rect.collidepoint(mouse_pos) and not self.menu.drawn:
             # The player clicked the hard mode button.
             self._make_hard()
             self._start_game()
@@ -211,13 +217,17 @@ class BreakOut:
 
     def _change_colors(self):
         """Change the colors of the bar and bricks."""
-        self.settings.brick_color_decrease = (random.randint(40, 55),
-                                              random.randint(40, 55),
-                                              random.randint(40, 55))
+        self.settings.brick_color_decrease = (
+            random.randint(40, 55),
+            random.randint(40, 55),
+            random.randint(40, 55),
+        )
 
-        self.bar.color = self.settings.brick_color = (random.randint(155, 255),
-                                                      random.randint(155, 255),
-                                                      random.randint(155, 255))
+        self.bar.color = self.settings.brick_color = (
+            random.randint(155, 255),
+            random.randint(155, 255),
+            random.randint(155, 255),
+        )
 
     def _make_hard(self):
         """Change the settings to a hard state."""
@@ -263,8 +273,7 @@ class BreakOut:
 
         # Determine the number of rows of bricks that fit on the screen.
         bar_height = self.bar.rect.height
-        available_space_y = (self.settings.screen_height - (brick_height) -
-                             (5 * bar_height))
+        available_space_y = self.settings.screen_height - (brick_height) - (5 * bar_height)
         number_rows = available_space_y // brick_height - 13
 
         # Create the fleet of bricks.

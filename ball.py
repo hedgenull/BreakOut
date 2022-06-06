@@ -1,4 +1,4 @@
-#================================================================================>
+# ================================================================================>
 # FILE NAME:  ball.py
 #
 # PURPOSE:
@@ -6,7 +6,7 @@
 #
 # CREATED DATE: 2022-03-19
 # AUTHOR:       @hedgenull
-#================================================================================>
+# ================================================================================>
 
 ########################################
 # Dependencies
@@ -23,6 +23,7 @@ from pygame.sprite import Sprite
 ########################################
 class Ball(Sprite):
     """Ball class for the BreakOut game."""
+
     def __init__(self, game):
         """Initialize the ball and set its properties."""
         super().__init__()
@@ -71,9 +72,10 @@ class Ball(Sprite):
                     # Bounce off of the top.
                     self.direction = dx, -dy
                     self.in_bar = True
-                elif (self.rect.right >= self.game.bar.rect.left + self.speed
-                      or
-                      self.rect.left <= self.game.bar.rect.right - self.speed):
+                elif (
+                    self.rect.right >= self.game.bar.rect.left + self.speed
+                    or self.rect.left <= self.game.bar.rect.right - self.speed
+                ):
                     # Bounce off of the sides.
                     self.direction = -dx, dy
                     self.in_bar = True

@@ -1,4 +1,4 @@
-#================================================================================>
+# ================================================================================>
 # FILE NAME:  settings.py
 #
 # PURPOSE:
@@ -6,13 +6,14 @@
 #
 # CREATED DATE: 2022-03-18
 # AUTHOR:       @hedgenull
-#================================================================================>
+# ================================================================================>
 
 from random import randint as rnd
 
 
 class Settings:
     """Settings class for BreakOut game."""
+
     def __init__(self):
         """Initialize settings class for BreakOut game."""
         # Main settings
